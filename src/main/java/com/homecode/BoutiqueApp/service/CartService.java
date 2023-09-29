@@ -29,7 +29,7 @@ public class CartService {
         log.debug("Request to get all Carts");
         return this.cartRepository.findAll()
                 .stream()
-                .map(this::mapToDTO)
+                .map(CartService::mapToDTO)
                 .collect(Collectors.toList());
     }
     @Transactional(readOnly = true)
@@ -37,7 +37,7 @@ public class CartService {
         log.debug("Request to get all active Carts");
         return this.cartRepository.findByStatus(CartStatus.NEW)
                 .stream()
-                .map(this::mapToDTO)
+                .map(CartService::mapToDTO)
                 .collect(Collectors.toList());
     }
     @Transactional(readOnly = true)
@@ -57,7 +57,7 @@ public class CartService {
     public CartDTO findById(Long id) {
         log.debug("Request to get a Cart : {}", id);
         return this.cartRepository.findById(id)
-                .map(this::mapToDTO)
+                .map(CartService::mapToDTO)
                 .orElse(null);
     }
 
@@ -87,7 +87,7 @@ public class CartService {
         this.cartRepository.deleteById(id);
     }
 
-    private CartDTO mapToDTO(Cart cart) {
+    public static CartDTO mapToDTO(Cart cart) {
         if (cart != null) {
             return new CartDTO(
                     cart.getId(),
