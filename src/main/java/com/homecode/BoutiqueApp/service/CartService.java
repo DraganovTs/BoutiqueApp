@@ -24,7 +24,7 @@ public class CartService {
     private final CartRepository cartRepository;
     private final CustomerRepository customerRepository;
     private final OrderService orderService;
-
+    @Transactional(readOnly = true)
     public List<CartDTO> findAll() {
         log.debug("Request to get all Carts");
         return this.cartRepository.findAll()
@@ -32,15 +32,17 @@ public class CartService {
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
-
+    @Transactional(readOnly = true)
     public List<CartDTO> findAllActiveCarts() {
+        log.debug("Request to get all active Carts");
         return this.cartRepository.findByStatus(CartStatus.NEW)
                 .stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
-
+    @Transactional(readOnly = true)
     public CartDTO getActiveCart(Long customerId) {
+        log.debug("Request to get active Cart for customer whit id : {}", customerId);
         List<Cart> carts = this.cartRepository.findByStatusAndCustomerId(
                 CartStatus.NEW,customerId);
         if (carts.size() ==1){
@@ -51,7 +53,7 @@ public class CartService {
         }
         return null;
     }
-
+    @Transactional(readOnly = true)
     public CartDTO findById(Long id) {
         log.debug("Request to get a Cart : {}", id);
         return this.cartRepository.findById(id)
@@ -60,6 +62,7 @@ public class CartService {
     }
 
     public CartDTO create(Long customerId) {
+        log.debug("Request to create a Cart whit customer id : {}", customerId);
         if (this.getActiveCart(customerId)==null){
             Customer customer = this.customerRepository.findById(customerId)
                     .orElseThrow(()->new IllegalStateException("The customer does not exist!!!"));

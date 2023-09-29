@@ -1,5 +1,6 @@
 package com.homecode.BoutiqueApp.model.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,9 +8,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartDTO {
+public class ReviewDTO {
+
     private Long id;
-    private Long orderId;
-    private CustomerDTO customerDTO;
-    private String status;
+
+    private String title;
+
+    private String description;
+
+    private Long rating;
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.homecode.BoutiqueApp.controller.Web.API;
+import static com.homecode.BoutiqueApp.constants.Web.API;
 
 @RequiredArgsConstructor
 @RestController
