@@ -23,7 +23,7 @@ public class CartService {
 
     private final CartRepository cartRepository;
     private final CustomerRepository customerRepository;
-    private final OrderService orderService;
+
     @Transactional(readOnly = true)
     public List<CartDTO> findAll() {
         log.debug("Request to get all Carts");
@@ -73,8 +73,8 @@ public class CartService {
                     CartStatus.NEW
             );
 
-            Order order = this.orderService.create(cart);
-            cart.setOrder(order);
+//            Order order = this.orderService.create(cart);
+//            cart.setOrder(order);
 
             return mapToDTO(this.cartRepository.save(cart));
         }else {
@@ -91,7 +91,7 @@ public class CartService {
         if (cart != null) {
             return new CartDTO(
                     cart.getId(),
-                    cart.getOrder().getId(),
+                    cart.getOrderId(),
                     CustomerService.mapToDTO(cart.getCustomer()),
                     cart.getStatus().name()
 

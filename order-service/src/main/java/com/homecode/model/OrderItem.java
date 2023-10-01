@@ -23,8 +23,8 @@ public class OrderItem extends AbstractEntity {
     @NotNull
     @Column(name = "quantity",nullable = false)
     private Long quantity;
-    @ManyToOne
-    private Product product;
+    @Column(name = "product_id")
+    private Long productId;
     @ManyToOne
     private Order order;
 }

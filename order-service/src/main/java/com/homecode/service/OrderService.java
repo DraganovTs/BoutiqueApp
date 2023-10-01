@@ -23,20 +23,20 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public Order create(Cart cart) {
-        log.debug("Request to create  Order whit a Cart : {}", cart);
-        return this.orderRepository.save(
-                new Order(
-                        BigDecimal.ZERO,
-                        OrderStatus.CREATION,
-                        null,
-                        null,
-                        null,
-                        Collections.emptySet(),
-                        cart
-                ));
-
-    }
+//    public Order create(Cart cart) {
+//        log.debug("Request to create  Order whit a Cart : {}", cart);
+//        return this.orderRepository.save(
+//                new Order(
+//                        BigDecimal.ZERO,
+//                        OrderStatus.CREATION,
+//                        null,
+//                        null,
+//                        null,
+//                        Collections.emptySet(),
+//                        cart
+//                ));
+//
+//    }
 
     public OrderDTO create(OrderDTO orderDTO) {
         log.debug("Request to create Order : {}", orderDTO);
