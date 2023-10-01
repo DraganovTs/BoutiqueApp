@@ -7,6 +7,8 @@
         <module>commons</module>
         <module>customer-service</module>
         <module>order-service</module>
+        <module>config-server</module>
+        <module>discovery-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -29,17 +31,20 @@
         <h2.version>2.2.224</h2.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.0.4</springdoc-openapi-starter-webmvc-ui.version>
+        <spring.cloud.config.version>4.0.4</spring.cloud.config.version>
+        <spring-cloud-dependencies.version>2022.0.4</spring-cloud-dependencies.version>
+        <spring-cloud.version>4.0.3</spring-cloud.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <!-- Inside dependencies -->
 
-                <dependency>
-                    <groupId>com.homecode</groupId>
-                    <artifactId>commons</artifactId>
-                    <version>${version}</version>
-                </dependency>
+            <dependency>
+                <groupId>com.homecode</groupId>
+                <artifactId>commons</artifactId>
+                <version>${version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.homecode</groupId>
                 <artifactId>product-service</artifactId>
@@ -50,6 +55,12 @@
                 <artifactId>customer-service</artifactId>
                 <version>${version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.homecode</groupId>
+                <artifactId>order-service</artifactId>
+                <version>${version}</version>
+            </dependency>
+
 
             <!-- Outside dependencies -->
 
@@ -103,6 +114,23 @@
             <!--			<artifactId>postgresql</artifactId>-->
             <!--			<scope>runtime</scope>-->
             <!--		</dependency>-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-config</artifactId>
+                <version>${spring.cloud.config.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+                <version>${spring-cloud.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
