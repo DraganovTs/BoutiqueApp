@@ -65,10 +65,12 @@ public class OrderService {
     @Transactional(readOnly = true)
     public List<OrderDTO> findAllByUser(Long id) {
         log.debug("Request to get all Orders by Customer id {}", id);
-        return this.orderRepository.findByCartCustomer_Id(id)
-                .stream()
-                .map(OrderService::mapToDto)
-                .collect(Collectors.toList());
+//        return this.orderRepository.findByCustomer_Id(id)
+//                .stream()
+//                .map(OrderService::mapToDto)
+//                .collect(Collectors.toList());
+        return null;
+        //TODO fix this query
     }
 
     public OrderDTO findById(Long id) {
