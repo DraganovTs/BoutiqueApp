@@ -4,3 +4,8 @@ server:
 spring:
   application:
     name: order-service
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

@@ -4,3 +4,8 @@ server:
 spring:
   application:
     name: customer-service
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
