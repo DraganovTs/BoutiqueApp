@@ -17,7 +17,7 @@ public class CartController {
 
     private final CartService cartService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<CartDTO> findAll(){
         return this.cartService.findAll();
     }

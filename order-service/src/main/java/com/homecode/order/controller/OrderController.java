@@ -17,7 +17,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<OrderDTO> findAll() {
         return this.orderService.findAll();
     }

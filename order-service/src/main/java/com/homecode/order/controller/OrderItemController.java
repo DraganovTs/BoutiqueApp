@@ -16,7 +16,7 @@ import static com.homecode.commons.utils.Web.API;
 public class OrderItemController {
     private final OrderItemService orderItemService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<OrderItemDTO> findAll() {
         return this.orderItemService.findAll();
     }

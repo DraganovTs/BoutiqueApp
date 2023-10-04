@@ -9,6 +9,7 @@
         <module>order-service</module>
         <module>config-server</module>
         <module>discovery-service</module>
+        <module>api-gateway</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -36,6 +37,7 @@
         <spring-cloud.version>4.0.3</spring-cloud.version>
         <micrometer-tracing-bridge-brave.version>1.1.5</micrometer-tracing-bridge-brave.version>
         <zipkin-reporter-brave.version>2.16.4</zipkin-reporter-brave.version>
+        <spring-cloud-starter-gateway.version>4.0.7</spring-cloud-starter-gateway.version>
     </properties>
 
     <dependencyManagement>
@@ -153,6 +155,12 @@
                 <artifactId>zipkin-reporter-brave</artifactId>
                 <version>${zipkin-reporter-brave.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-gateway</artifactId>
+                <version>${spring-cloud-starter-gateway.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

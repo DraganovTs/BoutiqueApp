@@ -19,7 +19,7 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<ReviewDTO> findAll() {
         return this.reviewService.findAll();
     }

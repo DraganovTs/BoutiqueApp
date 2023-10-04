@@ -17,7 +17,7 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<PaymentDTO> findAll() {
         return this.paymentService.findAll();
     }
