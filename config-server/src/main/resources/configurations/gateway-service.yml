@@ -11,11 +11,32 @@ spring:
           uri: http://localhost:8092
           predicates:
             - Path=/api/customers/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: customer-service
+                fallbackUri: forward:/fallback/customers
         - id: order-service
           uri: http://localhost:8091
           predicates:
             - Path=/api/orders/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: order-service
+                fallbackUri: forward:/fallback/orders
         - id: product-service
           uri: http://localhost:8090
           predicates:
             - Path=/api/products/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: product-service
+                fallbackUri: forward:/fallback/products
+
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

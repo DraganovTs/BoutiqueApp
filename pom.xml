@@ -38,6 +38,7 @@
         <micrometer-tracing-bridge-brave.version>1.1.5</micrometer-tracing-bridge-brave.version>
         <zipkin-reporter-brave.version>2.16.4</zipkin-reporter-brave.version>
         <spring-cloud-starter-gateway.version>4.0.7</spring-cloud-starter-gateway.version>
+        <spring-cloud-starter-circuitbreaker-reactor-resilience4.version>3.0.3</spring-cloud-starter-circuitbreaker-reactor-resilience4.version>
     </properties>
 
     <dependencyManagement>
@@ -160,6 +161,12 @@
                 <artifactId>spring-cloud-starter-gateway</artifactId>
                 <version>${spring-cloud-starter-gateway.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
+                <version>${spring-cloud-starter-circuitbreaker-reactor-resilience4.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
