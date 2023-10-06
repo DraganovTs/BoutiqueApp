@@ -1,5 +1,8 @@
 server:
   port: 8080
+  servlet:
+    context-path: /
+
 
 spring:
   application:
@@ -28,12 +31,30 @@ spring:
         - id: product-service
           uri: http://localhost:8090
           predicates:
-            - Path=/api/products/**
+            - Path=/api/products/**,/api/categories/**,/api/reviews/**
           filters:
             - name: CircuitBreaker
               args:
                 name: product-service
                 fallbackUri: forward:/fallback/products
+
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: gateway-service
+        primaryName: API Gateway Service
+      - url: /product-service/v3/api-docs
+        name: product-service
+        primaryName: Product Service
+
 
 
 management:
