@@ -16,7 +16,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Builder
 @Entity
 @Table(name = "category")
 public class Category extends AbstractEntity {

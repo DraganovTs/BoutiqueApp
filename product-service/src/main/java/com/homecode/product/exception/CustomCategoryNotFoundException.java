@@ -3,11 +3,11 @@ package com.homecode.product.exception;
 import lombok.Data;
 
 @Data
-public class NoDataFoundException extends RuntimeException {
+public class CustomCategoryNotFoundException extends RuntimeException {
 
     private String errorCode;
 
-    public NoDataFoundException(String message, String errorCode) {
+    public CustomCategoryNotFoundException(String message, String errorCode) {
         super(message);
         this.errorCode = errorCode;
     }

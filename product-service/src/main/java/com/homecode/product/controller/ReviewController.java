@@ -5,6 +5,7 @@ package com.homecode.product.controller;
 import com.homecode.commons.dto.ReviewDTO;
 import com.homecode.product.service.ReviewService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -20,7 +21,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping("/all")
-    public List<ReviewDTO> findAll() {
+    public ResponseEntity<List<ReviewDTO>> findAll() {
         return this.reviewService.findAll();
     }
 

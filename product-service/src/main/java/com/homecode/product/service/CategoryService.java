@@ -1,10 +1,10 @@
 package com.homecode.product.service;
 
 import com.homecode.commons.dto.CategoryDTO;
-import com.homecode.product.exception.CategoryAlreadyInDataBaseException;
+import com.homecode.product.exception.CustomCategoryExistException;
+import com.homecode.product.exception.CustomCategoryNotFoundException;
+import com.homecode.product.exception.CustomDatabaseOperationException;
 import com.homecode.product.exception.CustomValidationException;
-import com.homecode.product.exception.CustomValiidationException;
-import com.homecode.product.exception.NoDataFoundException;
 import com.homecode.product.model.Category;
 import com.homecode.product.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +37,7 @@ public class CategoryService {
                 .map(CategoryService::mapToDTO)
                 .collect(Collectors.toList());
         if (categories.isEmpty()) {
-            throw new NoDataFoundException("No categories available.",
+            throw new CustomCategoryNotFoundException("No categories available.",
                     "CATEGORIES_NOT_FOUND");
         }
         return new ResponseEntity<>(categories, HttpStatus.OK);
@@ -49,7 +49,7 @@ public class CategoryService {
         CategoryDTO category = this.categoryRepository.findById(id).map(CategoryService::mapToDTO)
                 .orElse(null);
         if (category == null) {
-            throw new NoDataFoundException("No category whit id " + id,
+            throw new CustomCategoryNotFoundException("No category whit id " + id,
                     "CATEGORY_NOT_FOUND");
         }
         return new ResponseEntity<>(category, HttpStatus.OK);
@@ -58,44 +58,63 @@ public class CategoryService {
     public ResponseEntity<CategoryDTO> create(@Valid CategoryDTO categoryDTO) {
         log.debug("Request to create Category: {}", categoryDTO);
         if (categoryDTO == null) {
-            throw new CustomValidationException();
+            throw new CustomValidationException("Not valid category",
+                    "CATEGORY_NOT_VALID");
         }
         if (this.categoryRepository.findByName(categoryDTO.getName()).isPresent()) {
-            throw new CategoryAlreadyInDataBaseException();
+            throw new CustomCategoryExistException("Category already exist",
+                    "CATEGORY_EXIST");
         }
         try {
-            Category category = Category.builder()
-                    .name(categoryDTO.getName())
-                    .description(categoryDTO.getDescription())
-                    .build();
+            Category category = mapToCategory(categoryDTO);
 
             this.categoryRepository.save(category);
 
             return new ResponseEntity<>(categoryDTO, HttpStatus.CREATED);
 
         } catch (Exception e) {
-            throw new CustomDatabaseOperationException();
+            throw new CustomDatabaseOperationException("", "DATABASE_OPERATION_EXCEPTION");
         }
 
     }
+
 
     public void delete(Long id) {
         log.debug("Request to delete Category by id {}", id);
-        this.categoryRepository.deleteById(id);
+        try {
+            this.categoryRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new CustomCategoryNotFoundException("No category whit id " + id,
+                    "CATEGORY_NOT_FOUND");
+        }
     }
 
     public static CategoryDTO mapToDTO(Category category) {
-        if (category != null) {
-            return new CategoryDTO(
-                    category.getId(),
-                    category.getName(),
-                    category.getDescription(),
-                    category.getProducts().
-                            stream()
-                            .map(ProductService::mapToDTO)
-                            .collect(Collectors.toSet())
-            );
+        if (category == null) {
+            throw new CustomValidationException("Not valid category",
+                    "CATEGORY_NOT_VALID");
         }
-        return null;
+        return new CategoryDTO(
+                category.getId(),
+                category.getName(),
+                category.getDescription(),
+                category.getProducts().
+                        stream()
+                        .map(ProductService::mapToDTO)
+                        .collect(Collectors.toSet())
+        );
+
+    }
+
+    private Category mapToCategory(CategoryDTO categoryDTO) {
+        if (categoryDTO == null) {
+            throw new CustomValidationException("Not valid category",
+                    "CATEGORY_NOT_VALID");
+        }
+        return new Category(
+                categoryDTO.getName(),
+                categoryDTO.getDescription(),
+                new HashSet<>()
+        );
     }
 }

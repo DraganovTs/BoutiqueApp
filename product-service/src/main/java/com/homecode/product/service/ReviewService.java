@@ -1,10 +1,13 @@
 package com.homecode.product.service;
 
 import com.homecode.commons.dto.ReviewDTO;
+import com.homecode.product.exception.CustomReviewException;
 import com.homecode.product.model.Review;
 import com.homecode.product.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +21,17 @@ import java.util.stream.Collectors;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
 
-    public List<ReviewDTO> findAll() {
+    public ResponseEntity<List<ReviewDTO>> findAll() {
         log.debug("Request to get all Reviews");
-        return this.reviewRepository.findAll()
+        List<ReviewDTO> reviews = this.reviewRepository.findAll()
                 .stream()
                 .map(ReviewService::mapToDTO)
                 .collect(Collectors.toList());
+        if (reviews.isEmpty()) {
+            throw new CustomReviewException("No reviews available.",
+                    "REVIEWS_NOT_FOUND");
+        }
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
     public ReviewDTO findById(Long id) {
