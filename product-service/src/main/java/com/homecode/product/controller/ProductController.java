@@ -3,6 +3,7 @@ package com.homecode.product.controller;
 import com.homecode.commons.dto.ProductDTO;
 import com.homecode.product.service.ProductService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,11 +19,11 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/all")
-    public List<ProductDTO> findAll(){
+    public ResponseEntity<List<ProductDTO>> findAll(){
         return this.productService.findAll();
     }
     @GetMapping("/{id}")
-    public ProductDTO findById(@PathVariable("id") Long id){
+    public ResponseEntity<ProductDTO> findById(@PathVariable("id") Long id){
         return this.productService.findById(id);
     }
 

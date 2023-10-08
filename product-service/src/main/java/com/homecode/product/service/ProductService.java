@@ -2,12 +2,15 @@ package com.homecode.product.service;
 
 
 import com.homecode.commons.dto.ProductDTO;
+import com.homecode.product.exception.CustomNotFoundException;
 import com.homecode.product.model.Product;
 import com.homecode.product.model.enums.ProductStatus;
 import com.homecode.product.repository.CategoryRepository;
 import com.homecode.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,19 +28,32 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public List<ProductDTO> findAll() {
+    public ResponseEntity<List<ProductDTO>> findAll() {
         log.debug("Request to get all Products");
-        return this.productRepository.findAll()
+
+        List<ProductDTO> products = this.productRepository.findAll()
                 .stream()
                 .map(ProductService::mapToDTO)
                 .collect(Collectors.toList());
+
+        if (products.isEmpty()) {
+            throw new CustomNotFoundException("No products available.",
+                    "PRODUCTS_NOT_FOUND");
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
 
     @Transactional(readOnly = true)
-    public ProductDTO findById(Long id) {
-        log.debug("Request to get  Product by id {}",id);
-        return this.productRepository.findById(id).map(ProductService::mapToDTO).orElse(null);
+    public ResponseEntity<ProductDTO> findById(Long id) {
+        log.debug("Request to get  Product by id {}", id);
+        ProductDTO product = this.productRepository.findById(id).map(ProductService::mapToDTO).orElse(null);
+
+        if (product==null){
+            throw new CustomNotFoundException("No products available.",
+                    "PRODUCT_NOT_FOUND");
+        }
+        return new ResponseEntity<>(product,HttpStatus.OK);
     }
 
     public ProductDTO create(ProductDTO productDTO) {
@@ -56,8 +72,13 @@ public class ProductService {
     }
 
     public void delete(Long id) {
-        log.debug("Request to delete Product by id {}",id);
+        log.debug("Request to delete Product by id {}", id);
+        try {
         this.productRepository.deleteById(id);
+        }catch (Exception e){
+            throw new CustomNotFoundException("No product whit id " + id,
+                    "PRODUCT_NOT_FOUND");
+        }
     }
 
     public static ProductDTO mapToDTO(Product product) {

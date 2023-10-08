@@ -1,8 +1,8 @@
 package com.homecode.product.service;
 
 import com.homecode.commons.dto.CategoryDTO;
-import com.homecode.product.exception.CustomCategoryExistException;
-import com.homecode.product.exception.CustomCategoryNotFoundException;
+import com.homecode.product.exception.CustomAlreadyExistException;
+import com.homecode.product.exception.CustomNotFoundException;
 import com.homecode.product.exception.CustomDatabaseOperationException;
 import com.homecode.product.exception.CustomValidationException;
 import com.homecode.product.model.Category;
@@ -37,7 +37,7 @@ public class CategoryService {
                 .map(CategoryService::mapToDTO)
                 .collect(Collectors.toList());
         if (categories.isEmpty()) {
-            throw new CustomCategoryNotFoundException("No categories available.",
+            throw new CustomNotFoundException("No categories available.",
                     "CATEGORIES_NOT_FOUND");
         }
         return new ResponseEntity<>(categories, HttpStatus.OK);
@@ -49,20 +49,18 @@ public class CategoryService {
         CategoryDTO category = this.categoryRepository.findById(id).map(CategoryService::mapToDTO)
                 .orElse(null);
         if (category == null) {
-            throw new CustomCategoryNotFoundException("No category whit id " + id,
+            throw new CustomNotFoundException("No category whit id " + id,
                     "CATEGORY_NOT_FOUND");
         }
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     public ResponseEntity<CategoryDTO> create(@Valid CategoryDTO categoryDTO) {
+
         log.debug("Request to create Category: {}", categoryDTO);
-        if (categoryDTO == null) {
-            throw new CustomValidationException("Not valid category",
-                    "CATEGORY_NOT_VALID");
-        }
+
         if (this.categoryRepository.findByName(categoryDTO.getName()).isPresent()) {
-            throw new CustomCategoryExistException("Category already exist",
+            throw new CustomAlreadyExistException("Category already exist",
                     "CATEGORY_EXIST");
         }
         try {
@@ -73,7 +71,7 @@ public class CategoryService {
             return new ResponseEntity<>(categoryDTO, HttpStatus.CREATED);
 
         } catch (Exception e) {
-            throw new CustomDatabaseOperationException("", "DATABASE_OPERATION_EXCEPTION");
+            throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
         }
 
     }
@@ -84,7 +82,7 @@ public class CategoryService {
         try {
             this.categoryRepository.deleteById(id);
         } catch (Exception e) {
-            throw new CustomCategoryNotFoundException("No category whit id " + id,
+            throw new CustomNotFoundException("No category whit id " + id,
                     "CATEGORY_NOT_FOUND");
         }
     }

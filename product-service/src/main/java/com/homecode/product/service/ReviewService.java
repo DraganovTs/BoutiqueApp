@@ -1,7 +1,10 @@
 package com.homecode.product.service;
 
 import com.homecode.commons.dto.ReviewDTO;
-import com.homecode.product.exception.CustomReviewException;
+import com.homecode.product.exception.CustomAlreadyExistException;
+import com.homecode.product.exception.CustomDatabaseOperationException;
+import com.homecode.product.exception.CustomNotFoundException;
+import com.homecode.product.exception.CustomValidationException;
 import com.homecode.product.model.Review;
 import com.homecode.product.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,42 +31,77 @@ public class ReviewService {
                 .map(ReviewService::mapToDTO)
                 .collect(Collectors.toList());
         if (reviews.isEmpty()) {
-            throw new CustomReviewException("No reviews available.",
+            throw new CustomNotFoundException("No reviews available.",
                     "REVIEWS_NOT_FOUND");
         }
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
-    public ReviewDTO findById(Long id) {
+    public ResponseEntity<ReviewDTO> findById(Long id) {
         log.debug("Request to get Review : {}", id);
-        return this.reviewRepository.findById(id).map(ReviewService::mapToDTO).orElse(null);
+        ReviewDTO reviewDTO = this.reviewRepository.findById(id).map(ReviewService::mapToDTO).orElse(null);
+        if (reviewDTO == null) {
+            throw new CustomNotFoundException("No reviews available.",
+                    "REVIEWS_NOT_FOUND");
+        }
+
+        return new ResponseEntity<>(reviewDTO, HttpStatus.OK);
     }
 
-    public ReviewDTO create(ReviewDTO reviewDTO) {
+    public ResponseEntity<ReviewDTO> create(ReviewDTO reviewDTO) {
         log.debug("Request to create Review : {}", reviewDTO);
-        return mapToDTO(this.reviewRepository.save(
-                new Review(
-                        reviewDTO.getTitle(),
-                        reviewDTO.getDescription(),
-                        reviewDTO.getRating()
-                )
-        ));
+
+        if (this.reviewRepository.findByTitle(reviewDTO.getTitle()).isPresent()) {
+            throw new CustomAlreadyExistException("Review already exist",
+                    "REVIEW_EXIST");
+        }
+
+        try {
+            Review review = mapToReview(reviewDTO);
+
+            this.reviewRepository.save(review);
+
+            return new ResponseEntity<>(reviewDTO, HttpStatus.CREATED);
+        } catch (Exception e) {
+
+            throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
+        }
+
+
     }
+
 
     public void delete(Long id) {
         log.debug("Request to delete Review : {}", id);
+        try {
         this.reviewRepository.deleteById(id);
+        }catch (Exception e){
+            throw new CustomNotFoundException("No review whit id " + id,
+                    "REVIEW_NOT_FOUND");
+        }
     }
 
     public static ReviewDTO mapToDTO(Review review) {
-        if (review != null) {
-            return new ReviewDTO(
-                    review.getId(),
-                    review.getTitle(),
-                    review.getDescription(),
-                    review.getRating()
-            );
+        if (review == null) {
+            throw  new CustomValidationException("Not valid review",
+                    "REVIEW_NOT_VALID");
         }
-        return null;
+        return new ReviewDTO(
+                review.getId(),
+                review.getTitle(),
+                review.getDescription(),
+                review.getRating());
+    }
+
+    private Review mapToReview(ReviewDTO reviewDTO) {
+        if (reviewDTO == null) {
+            throw new CustomValidationException("Not valid review",
+                    "REVIEW_NOT_VALID");
+        }
+        return new Review(
+                reviewDTO.getTitle(),
+                reviewDTO.getDescription(),
+                reviewDTO.getRating()
+        );
     }
 }

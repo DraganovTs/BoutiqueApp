@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class CustomResponseEntityExceptionHandler {
 
-    @ExceptionHandler(CustomCategoryNotFoundException.class)
+    @ExceptionHandler(CustomNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handCategoryResponse
-            (CustomCategoryNotFoundException exception) {
+            (CustomNotFoundException exception) {
 
         return new ResponseEntity<>(ErrorResponse.builder()
                 .errorCode(exception.getErrorCode())
@@ -19,14 +19,34 @@ public class CustomResponseEntityExceptionHandler {
                 .build(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(CustomCategoryExistException.class)
+    @ExceptionHandler(CustomAlreadyExistException.class)
     protected ResponseEntity<ErrorResponse> handCategoryResponse
-            (CustomCategoryExistException exception) {
+            (CustomAlreadyExistException exception) {
 
         return new ResponseEntity<>(ErrorResponse.builder()
                 .errorCode(exception.getErrorCode())
                 .errorMessage(exception.getMessage())
                 .build(), HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler(CustomDatabaseOperationException.class)
+    protected ResponseEntity<ErrorResponse> handCategoryResponse
+            (CustomDatabaseOperationException exception) {
+
+        return new ResponseEntity<>(ErrorResponse.builder()
+                .errorCode(exception.getErrorCode())
+                .errorMessage(exception.getMessage())
+                .build(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(CustomValidationException.class)
+    protected ResponseEntity<ErrorResponse> handCategoryResponse
+            (CustomValidationException exception) {
+
+        return new ResponseEntity<>(ErrorResponse.builder()
+                .errorCode(exception.getErrorCode())
+                .errorMessage(exception.getMessage())
+                .build(), HttpStatus.CONFLICT);
     }
 
 

@@ -26,12 +26,12 @@ public class ReviewController {
     }
 
     @GetMapping("/{id}")
-    public ReviewDTO findById(@PathVariable("id") Long id) {
+    public ResponseEntity<ReviewDTO> findById(@PathVariable("id") Long id) {
         return this.reviewService.findById(id);
     }
 
     @PostMapping("/create")
-    public ReviewDTO create(@RequestBody ReviewDTO reviewDTO) {
+    public ResponseEntity<ReviewDTO> create(@RequestBody ReviewDTO reviewDTO) {
         return this.reviewService.create(reviewDTO);
     }
 
