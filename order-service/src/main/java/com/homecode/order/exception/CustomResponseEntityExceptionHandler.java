@@ -1,4 +1,4 @@
-package com.homecode.product.exception;
+package com.homecode.order.exception;
 
 import com.homecode.commons.exception.CustomAlreadyExistException;
 import com.homecode.commons.exception.CustomDatabaseOperationException;

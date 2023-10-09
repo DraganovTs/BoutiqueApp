@@ -2,7 +2,10 @@ package com.homecode.product.service;
 
 
 import com.homecode.commons.dto.ProductDTO;
-import com.homecode.product.exception.CustomNotFoundException;
+import com.homecode.commons.exception.CustomAlreadyExistException;
+import com.homecode.commons.exception.CustomDatabaseOperationException;
+import com.homecode.commons.exception.CustomNotFoundException;
+import com.homecode.commons.exception.CustomValidationException;
 import com.homecode.product.model.Product;
 import com.homecode.product.model.enums.ProductStatus;
 import com.homecode.product.repository.CategoryRepository;
@@ -49,34 +52,40 @@ public class ProductService {
         log.debug("Request to get  Product by id {}", id);
         ProductDTO product = this.productRepository.findById(id).map(ProductService::mapToDTO).orElse(null);
 
-        if (product==null){
-            throw new CustomNotFoundException("No products available.",
+        if (product == null) {
+            throw new CustomNotFoundException("Not found product whit id " + id,
                     "PRODUCT_NOT_FOUND");
         }
-        return new ResponseEntity<>(product,HttpStatus.OK);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    public ProductDTO create(ProductDTO productDTO) {
+    public ResponseEntity<ProductDTO> create(ProductDTO productDTO) {
         log.debug("Request to create Product : {}", productDTO);
-        return mapToDTO(this.productRepository.save(new Product(
-                productDTO.getName(),
-                productDTO.getDescription(),
-                productDTO.getPrice(),
-                productDTO.getQuantity(),
-                ProductStatus.valueOf(productDTO.getProductStatus()),
-                productDTO.getSalesCounter(),
-                Collections.emptySet(),
-                this.categoryRepository.findById(productDTO.getCategory().getId()).orElse(null))
-        ));
+
+        if (this.productRepository.findByName(productDTO.getName()).isPresent()) {
+            throw new CustomAlreadyExistException("Product already exist",
+                    "PRODUCT_EXIST");
+        }
+        try {
+            Product product = matToProduct(productDTO);
+
+            this.productRepository.save(product);
+
+        return new ResponseEntity<>(mapToDTO(product), HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
+        }
 
     }
+
 
     public void delete(Long id) {
         log.debug("Request to delete Product by id {}", id);
         try {
-        this.productRepository.deleteById(id);
-        }catch (Exception e){
-            throw new CustomNotFoundException("No product whit id " + id,
+            this.productRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new CustomNotFoundException("Not found product whit id " + id,
                     "PRODUCT_NOT_FOUND");
         }
     }
@@ -97,5 +106,21 @@ public class ProductService {
             );
         }
         return null;
+    }
+
+    private Product matToProduct(ProductDTO productDTO) {
+        if (productDTO == null) {
+            throw new CustomValidationException("Not valid product",
+                    "PRODUCT_NOT_VALID");
+        }
+        return new Product(
+                productDTO.getName(),
+                productDTO.getDescription(),
+                productDTO.getPrice(),
+                productDTO.getQuantity(),
+                ProductStatus.valueOf(productDTO.getProductStatus()),
+                productDTO.getSalesCounter(),
+                Collections.emptySet(),
+                this.categoryRepository.findById(productDTO.getCategory().getId()).orElse(null));
     }
 }

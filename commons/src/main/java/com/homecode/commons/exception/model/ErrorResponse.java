@@ -1,4 +1,4 @@
-package com.homecode.product.model;
+package com.homecode.commons.exception.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

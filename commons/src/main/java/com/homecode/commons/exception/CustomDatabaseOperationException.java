@@ -1,4 +1,4 @@
-package com.homecode.product.exception;
+package com.homecode.commons.exception;
 
 import lombok.Data;
 

@@ -2,12 +2,18 @@ package com.homecode.order.service;
 
 
 import com.homecode.commons.dto.OrderItemDTO;
+import com.homecode.commons.exception.CustomAlreadyExistException;
+import com.homecode.commons.exception.CustomDatabaseOperationException;
+import com.homecode.commons.exception.CustomNotFoundException;
+import com.homecode.commons.exception.CustomValidationException;
 import com.homecode.order.model.Order;
 import com.homecode.order.model.OrderItem;
 import com.homecode.order.repository.OrderItemRepository;
 import com.homecode.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,39 +30,65 @@ public class OrderItemService {
     private final OrderRepository orderRepository;
 
     @Transactional(readOnly = true)
-    public List<OrderItemDTO> findAll() {
+    public ResponseEntity<List<OrderItemDTO>> findAll() {
         log.debug("Request to get all OrderItems");
-        return this.orderItemRepository.findAll()
+
+        List<OrderItemDTO> orderItems = this.orderItemRepository.findAll()
                 .stream()
                 .map(OrderItemService::mapToDto)
                 .collect(Collectors.toList());
+
+        if (orderItems.isEmpty()) {
+            throw new CustomNotFoundException("No order items available.",
+                    "ORDER_ITEMS_NOT_FOUND");
+        }
+
+        return new ResponseEntity<>(orderItems, HttpStatus.OK);
     }
 
     @Transactional(readOnly = true)
-    public OrderItemDTO findById(Long id) {
+    public ResponseEntity<OrderItemDTO> findById(Long id) {
         log.debug("Request to get OrderItem by id : {}", id);
-        return this.orderItemRepository.findById(id).map(OrderItemService::mapToDto).orElse(null);
+
+        OrderItemDTO orderItem = this.orderItemRepository.findById(id).map(OrderItemService::mapToDto).orElse(null);
+        if (orderItem == null) {
+            throw new CustomNotFoundException("Not found order item whit id " + id,
+                    "ORDER_ITEM_NOT_FOUND");
+        }
+        return new ResponseEntity<>(orderItem, HttpStatus.OK);
     }
 
-    public OrderItemDTO create(OrderItemDTO orderItemDTO) {
+    public ResponseEntity<OrderItemDTO> create(OrderItemDTO orderItemDTO) {
         log.debug("Request to create OrderItem : {}", orderItemDTO);
-        Order order = this.orderRepository.findById(orderItemDTO.getProductId())
-                .orElseThrow(() -> new IllegalStateException("The order does not exist!!!"));
 
-        return mapToDto(
-                this.orderItemRepository.save(
-                        new OrderItem(
-                                orderItemDTO.getQuantity(),
-                                orderItemDTO.getProductId(),
-                                order
-                        )
-                )
-        );
+        if (this.orderItemRepository.findByProductId(orderItemDTO.getProductId()).isPresent()) {
+            throw new CustomAlreadyExistException("Order item already exist",
+                    "ORDER_ITEM_EXIST");
+        }
+
+        Order order = this.orderRepository.findById(orderItemDTO.getProductId())
+                .orElseThrow(() -> new CustomNotFoundException("Not found order item whit id " + orderItemDTO.getOrderId(),
+                        "ORDER_ITEM_NOT_FOUND"));
+
+        try {
+            OrderItem orderItem = mapToOrderItem(orderItemDTO, order);
+            this.orderItemRepository.save(orderItem);
+            return new ResponseEntity<>(mapToDto(orderItem), HttpStatus.CREATED);
+        } catch (Exception e) {
+            throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
+        }
+
     }
+
 
     public void delete(Long id) {
         log.debug("Request to delete OrderItem : {}", id);
-        this.orderItemRepository.deleteById(id);
+        try {
+            this.orderItemRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new CustomNotFoundException("Not found order item whit id " + id,
+                    "ORDER_ITEM_NOT_FOUND");
+        }
     }
 
     public static OrderItemDTO mapToDto(OrderItem orderItem) {
@@ -68,5 +100,17 @@ public class OrderItemService {
                     orderItem.getOrder().getId());
         }
         return null;
+    }
+
+    private OrderItem mapToOrderItem(OrderItemDTO orderItemDTO, Order order) {
+        if (orderItemDTO == null || order == null) {
+            throw new CustomValidationException("Not valid order item",
+                    "ORDER_ITEM_NOT_VALID");
+        }
+        return new OrderItem(
+                orderItemDTO.getQuantity(),
+                orderItemDTO.getProductId(),
+                order
+        );
     }
 }

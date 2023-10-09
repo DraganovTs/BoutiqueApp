@@ -2,11 +2,14 @@ package com.homecode.order.service;
 
 
 import com.homecode.commons.dto.OrderDTO;
+import com.homecode.commons.exception.CustomNotFoundException;
 import com.homecode.order.model.Order;
 import com.homecode.order.model.enums.OrderStatus;
 import com.homecode.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,12 +57,18 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public List<OrderDTO> findAll() {
+    public ResponseEntity<List<OrderDTO>> findAll() {
         log.debug("Request to get all Orders");
-        return this.orderRepository.findAll()
+
+        List<OrderDTO> orders = this.orderRepository.findAll()
                 .stream()
                 .map(OrderService::mapToDto)
                 .collect(Collectors.toList());
+        if (orders.isEmpty()) {
+            throw new CustomNotFoundException("No categories available.",
+                    "CATEGORIES_NOT_FOUND");
+        }
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
     @Transactional(readOnly = true)

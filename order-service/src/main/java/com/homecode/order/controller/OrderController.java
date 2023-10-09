@@ -3,6 +3,7 @@ package com.homecode.order.controller;
 import com.homecode.commons.dto.OrderDTO;
 import com.homecode.order.service.OrderService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("/all")
-    public List<OrderDTO> findAll() {
+    public ResponseEntity<List<OrderDTO>> findAll() {
         return this.orderService.findAll();
     }
 

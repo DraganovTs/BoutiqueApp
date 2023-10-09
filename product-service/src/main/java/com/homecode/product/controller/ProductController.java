@@ -27,8 +27,8 @@ public class ProductController {
         return this.productService.findById(id);
     }
 
-    @PostMapping()
-    public ProductDTO create(@RequestBody ProductDTO productDTO){
+    @PostMapping("/create")
+    public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO productDTO){
       return this.productService.create(productDTO);
     }
 

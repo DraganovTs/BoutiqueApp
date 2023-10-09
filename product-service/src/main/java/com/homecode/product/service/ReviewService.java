@@ -1,10 +1,10 @@
 package com.homecode.product.service;
 
 import com.homecode.commons.dto.ReviewDTO;
-import com.homecode.product.exception.CustomAlreadyExistException;
-import com.homecode.product.exception.CustomDatabaseOperationException;
-import com.homecode.product.exception.CustomNotFoundException;
-import com.homecode.product.exception.CustomValidationException;
+import com.homecode.commons.exception.CustomAlreadyExistException;
+import com.homecode.commons.exception.CustomDatabaseOperationException;
+import com.homecode.commons.exception.CustomNotFoundException;
+import com.homecode.commons.exception.CustomValidationException;
 import com.homecode.product.model.Review;
 import com.homecode.product.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -61,7 +61,7 @@ public class ReviewService {
 
             this.reviewRepository.save(review);
 
-            return new ResponseEntity<>(reviewDTO, HttpStatus.CREATED);
+            return new ResponseEntity<>(mapToDTO(review), HttpStatus.CREATED);
         } catch (Exception e) {
 
             throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");

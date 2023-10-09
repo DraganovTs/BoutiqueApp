@@ -1,10 +1,10 @@
 package com.homecode.product.service;
 
 import com.homecode.commons.dto.CategoryDTO;
-import com.homecode.product.exception.CustomAlreadyExistException;
-import com.homecode.product.exception.CustomNotFoundException;
-import com.homecode.product.exception.CustomDatabaseOperationException;
-import com.homecode.product.exception.CustomValidationException;
+import com.homecode.commons.exception.CustomAlreadyExistException;
+import com.homecode.commons.exception.CustomDatabaseOperationException;
+import com.homecode.commons.exception.CustomNotFoundException;
+import com.homecode.commons.exception.CustomValidationException;
 import com.homecode.product.model.Category;
 import com.homecode.product.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +49,7 @@ public class CategoryService {
         CategoryDTO category = this.categoryRepository.findById(id).map(CategoryService::mapToDTO)
                 .orElse(null);
         if (category == null) {
-            throw new CustomNotFoundException("No category whit id " + id,
+            throw new CustomNotFoundException("Not found category whit id " + id,
                     "CATEGORY_NOT_FOUND");
         }
         return new ResponseEntity<>(category, HttpStatus.OK);
@@ -68,7 +68,7 @@ public class CategoryService {
 
             this.categoryRepository.save(category);
 
-            return new ResponseEntity<>(categoryDTO, HttpStatus.CREATED);
+            return new ResponseEntity<>(mapToDTO(category), HttpStatus.CREATED);
 
         } catch (Exception e) {
             throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
@@ -82,7 +82,7 @@ public class CategoryService {
         try {
             this.categoryRepository.deleteById(id);
         } catch (Exception e) {
-            throw new CustomNotFoundException("No category whit id " + id,
+            throw new CustomNotFoundException("Not found category whit id " + id,
                     "CATEGORY_NOT_FOUND");
         }
     }
