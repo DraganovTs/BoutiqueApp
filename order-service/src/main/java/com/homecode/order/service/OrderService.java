@@ -1,6 +1,7 @@
 package com.homecode.order.service;
 
 
+import com.homecode.commons.dto.CartDTO;
 import com.homecode.commons.dto.OrderDTO;
 import com.homecode.commons.exception.CustomDatabaseOperationException;
 import com.homecode.commons.exception.CustomNotFoundException;
@@ -28,8 +29,8 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public Order create(Long cartId) {
-        log.debug("Request to create  Order whit a Cart : {}", cartId);
+    public OrderDTO create(CartDTO cartDTO) {
+        log.debug("Request to create  Order whit a Cart : {}", cartDTO);
 
         try {
             Order order = new Order(
@@ -39,10 +40,10 @@ public class OrderService {
                     null,
                     null,
                     Collections.emptySet(),
-                    cartId
+                    cartDTO.getId()
             );
             this.orderRepository.save(order);
-            return order;
+            return mapToDto(order);
         } catch (Exception e) {
             throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
         }

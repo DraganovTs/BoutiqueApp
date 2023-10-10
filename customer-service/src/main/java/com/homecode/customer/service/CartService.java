@@ -2,9 +2,11 @@ package com.homecode.customer.service;
 
 
 import com.homecode.commons.dto.CartDTO;
+import com.homecode.commons.dto.OrderDTO;
 import com.homecode.commons.exception.CustomDatabaseOperationException;
 import com.homecode.commons.exception.CustomIllegalStateException;
 import com.homecode.commons.exception.CustomNotFoundException;
+import com.homecode.customer.feign.OrderServiceInterface;
 import com.homecode.customer.model.Cart;
 import com.homecode.customer.model.Customer;
 import com.homecode.customer.model.enums.CartStatus;
@@ -28,6 +30,7 @@ public class CartService {
 
     private final CartRepository cartRepository;
     private final CustomerRepository customerRepository;
+    private final OrderServiceInterface orderService;
 
     @Transactional(readOnly = true)
     public ResponseEntity<List<CartDTO>> findAll() {
@@ -102,9 +105,8 @@ public class CartService {
                     customer,
                     CartStatus.NEW
             );
-            //TODO make FEIGN client connection
-//            Order order = this.orderService.create(cart);
-//            cart.setOrder(order);
+            OrderDTO order = this.orderService.create(mapToDTO(cart));
+            cart.setOrderId(order.getId());
             try {
                 this.cartRepository.save(cart);
                 return new ResponseEntity<>(mapToDTO(cart), HttpStatus.CREATED);
@@ -120,8 +122,8 @@ public class CartService {
     public void delete(Long id) {
         log.debug("Request to delete a Cart : {}", id);
         try {
-        this.cartRepository.deleteById(id);
-        }catch (Exception e){
+            this.cartRepository.deleteById(id);
+        } catch (Exception e) {
             throw new CustomNotFoundException("Not found cart whit id " + id,
                     "CART_NOT_FOUND");
         }

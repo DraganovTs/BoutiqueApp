@@ -1,5 +1,6 @@
 package com.homecode.order.controller;
 
+import com.homecode.commons.dto.CartDTO;
 import com.homecode.commons.dto.OrderDTO;
 import com.homecode.order.service.OrderService;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,11 @@ public class OrderController {
     @PostMapping("/create")
     public ResponseEntity<OrderDTO> create(@RequestBody OrderDTO orderDTO) {
         return this.orderService.create(orderDTO);
+    }
+
+    @PostMapping("/createCart")
+    public OrderDTO create(@RequestBody CartDTO cartDTO) {
+        return this.orderService.create(cartDTO);
     }
 
     @GetMapping("/{id}")
