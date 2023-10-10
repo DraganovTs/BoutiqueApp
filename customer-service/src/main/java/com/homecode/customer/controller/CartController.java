@@ -3,6 +3,7 @@ package com.homecode.customer.controller;
 import com.homecode.commons.dto.CartDTO;
 import com.homecode.customer.service.CartService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,27 +19,27 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping("/all")
-    public List<CartDTO> findAll(){
+    public ResponseEntity<List<CartDTO>> findAll(){
         return this.cartService.findAll();
     }
 
     @GetMapping("/active")
-    private List<CartDTO> findAllActiveCarts(){
+    private ResponseEntity<List<CartDTO>> findAllActiveCarts(){
         return this.cartService.findAllActiveCarts();
     }
 
-    @GetMapping("/customer/{id}")
-    public CartDTO getActiveCartForCustomer(@PathVariable("id") Long customerId){
+    @GetMapping("/customer/carts")
+    public ResponseEntity<CartDTO> getActiveCartForCustomer(@RequestBody Long customerId){
         return this.cartService.getActiveCart(customerId);
     }
 
     @GetMapping("/{id}")
-    public CartDTO findById(@PathVariable("id") Long id){
+    public ResponseEntity<CartDTO> findById(@PathVariable("id") Long id){
         return this.cartService.findById(id);
     }
 
-    @PostMapping("/customer/{id}")
-    public CartDTO create(@PathVariable("id") Long customerId){
+    @PostMapping("/customer/create")
+    public ResponseEntity<CartDTO> create(@RequestBody Long customerId){
         return this.cartService.create(customerId);
     }
 

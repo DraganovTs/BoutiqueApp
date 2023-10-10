@@ -23,18 +23,18 @@ public class OrderController {
         return this.orderService.findAll();
     }
 
-    @GetMapping("/customer/{id}")
-    public List<OrderDTO> findAllByUser(@PathVariable Long id) {
+    @GetMapping("/customer/orders")
+    public ResponseEntity<List<OrderDTO>> findAllByUser(@RequestBody Long id) {
         return this.orderService.findAllByUser(id);
     }
 
     @PostMapping("/create")
-    public OrderDTO create(@RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<OrderDTO> create(@RequestBody OrderDTO orderDTO) {
         return this.orderService.create(orderDTO);
     }
 
     @GetMapping("/{id}")
-    public OrderDTO findById(@PathVariable("id") Long id) {
+    public ResponseEntity<OrderDTO> findById(@PathVariable("id") Long id) {
         return this.orderService.findById(id);
     }
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class CustomResponseEntityExceptionHandler {
 
     @ExceptionHandler(CustomNotFoundException.class)
-    protected ResponseEntity<ErrorResponse> handCategoryResponse
+    protected ResponseEntity<ErrorResponse> handleCustomNotFoundResponse
             (CustomNotFoundException exception) {
 
         return new ResponseEntity<>(ErrorResponse.builder()
@@ -24,7 +24,7 @@ public class CustomResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(CustomAlreadyExistException.class)
-    protected ResponseEntity<ErrorResponse> handCategoryResponse
+    protected ResponseEntity<ErrorResponse> handleCustomAlreadyExistResponse
             (CustomAlreadyExistException exception) {
 
         return new ResponseEntity<>(ErrorResponse.builder()
@@ -34,7 +34,7 @@ public class CustomResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(CustomDatabaseOperationException.class)
-    protected ResponseEntity<ErrorResponse> handCategoryResponse
+    protected ResponseEntity<ErrorResponse> handleCustomDatabaseOperationResponse
             (CustomDatabaseOperationException exception) {
 
         return new ResponseEntity<>(ErrorResponse.builder()
@@ -44,7 +44,7 @@ public class CustomResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(CustomValidationException.class)
-    protected ResponseEntity<ErrorResponse> handCategoryResponse
+    protected ResponseEntity<ErrorResponse> handleCustomValidationResponse
             (CustomValidationException exception) {
 
         return new ResponseEntity<>(ErrorResponse.builder()

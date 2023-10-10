@@ -2,7 +2,9 @@ package com.homecode.order.service;
 
 
 import com.homecode.commons.dto.OrderDTO;
+import com.homecode.commons.exception.CustomDatabaseOperationException;
 import com.homecode.commons.exception.CustomNotFoundException;
+import com.homecode.commons.exception.CustomValidationException;
 import com.homecode.order.model.Order;
 import com.homecode.order.model.enums.OrderStatus;
 import com.homecode.order.repository.OrderRepository;
@@ -26,35 +28,39 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-//    public Order create(Cart cart) {
-//        log.debug("Request to create  Order whit a Cart : {}", cart);
-//        return this.orderRepository.save(
-//                new Order(
-//                        BigDecimal.ZERO,
-//                        OrderStatus.CREATION,
-//                        null,
-//                        null,
-//                        null,
-//                        Collections.emptySet(),
-//                        cart
-//                ));
-//
-//    }
+    public Order create(Long cartId) {
+        log.debug("Request to create  Order whit a Cart : {}", cartId);
 
-    public OrderDTO create(OrderDTO orderDTO) {
-        log.debug("Request to create Order : {}", orderDTO);
-        return mapToDto(this.orderRepository.save(
-                new Order(
-                        BigDecimal.ZERO,
-                        OrderStatus.CREATION,
-                        null,
-                        null,
-                        null,
-                        Collections.emptySet(),
-                        null
-                )
-        ));
+        try {
+            Order order = new Order(
+                    BigDecimal.ZERO,
+                    OrderStatus.CREATION,
+                    null,
+                    null,
+                    null,
+                    Collections.emptySet(),
+                    cartId
+            );
+            this.orderRepository.save(order);
+            return order;
+        } catch (Exception e) {
+            throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
+        }
+
+
     }
+
+    public ResponseEntity<OrderDTO> create(OrderDTO orderDTO) {
+        log.debug("Request to create Order : {}", orderDTO);
+        Order order = mapToOrder(orderDTO);
+        try {
+            this.orderRepository.save(order);
+            return new ResponseEntity<>(mapToDto(order), HttpStatus.CREATED);
+        } catch (Exception e) {
+            throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
+        }
+    }
+
 
     @Transactional(readOnly = true)
     public ResponseEntity<List<OrderDTO>> findAll() {
@@ -72,24 +78,40 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public List<OrderDTO> findAllByUser(Long id) {
+    public ResponseEntity<List<OrderDTO>> findAllByUser(Long id) {
         log.debug("Request to get all Orders by Customer id {}", id);
-//        return this.orderRepository.findByCustomer_Id(id)
-//                .stream()
-//                .map(OrderService::mapToDto)
-//                .collect(Collectors.toList());
-        return null;
-        //TODO fix this query
+
+        List<OrderDTO> userOrders = this.orderRepository.findAllByCartId(id)
+                .stream()
+                .map(OrderService::mapToDto)
+                .collect(Collectors.toList());
+
+        if (userOrders.isEmpty()) {
+            throw new CustomNotFoundException("Not found orders for user " + id,
+                    "ORDERS_NOT_FOUND");
+        }
+        return new ResponseEntity<>(userOrders, HttpStatus.OK);
     }
 
-    public OrderDTO findById(Long id) {
+    public ResponseEntity<OrderDTO> findById(Long id) {
         log.debug("Request to get Order by id {}", id);
-        return this.orderRepository.findById(id).map(OrderService::mapToDto)
+        OrderDTO order = this.orderRepository.findById(id).map(OrderService::mapToDto)
                 .orElse(null);
+        if (order == null) {
+            throw new CustomNotFoundException("Not found order whit id " + id,
+                    "ORDER_NOT_FOUND");
+        }
+        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
     public void delete(Long id) {
         log.debug("Request to delete Order : {}", id);
+        try {
+            this.orderRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new CustomNotFoundException("Not found order whit id " + id,
+                    "ORDER_NOT_FOUND");
+        }
         this.orderRepository.deleteById(id);
     }
 
@@ -112,4 +134,19 @@ public class OrderService {
         return null;
     }
 
+    private Order mapToOrder(OrderDTO orderDTO) {
+        if (orderDTO == null) {
+            throw new CustomValidationException("Not valid order",
+                    "ORDER_NOT_VALID");
+        }
+        return new Order(
+                BigDecimal.ZERO,
+                OrderStatus.CREATION,
+                null,
+                null,
+                null,
+                Collections.emptySet(),
+                null
+        );
+    }
 }
