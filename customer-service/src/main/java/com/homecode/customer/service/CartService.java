@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -111,7 +112,8 @@ public class CartService {
                 this.cartRepository.save(cart);
                 return new ResponseEntity<>(mapToDTO(cart), HttpStatus.CREATED);
             } catch (Exception e) {
-                throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
+                throw new CustomDatabaseOperationException("An error occurred while creating cart"
+                        , "DATABASE_OPERATION_EXCEPTION");
             }
         } else {
             throw new CustomIllegalStateException("Many active carts detected!!!",
@@ -119,13 +121,21 @@ public class CartService {
         }
     }
 
-    public void delete(Long id) {
+    public ResponseEntity<?> delete(Long id) {
         log.debug("Request to delete a Cart : {}", id);
-        try {
-            this.cartRepository.deleteById(id);
-        } catch (Exception e) {
+
+        Optional<Cart> cartOptional = this.cartRepository.findById(id);
+        if (cartOptional.isEmpty()){
             throw new CustomNotFoundException("Not found cart whit id " + id,
                     "CART_NOT_FOUND");
+        }
+
+        try {
+            this.cartRepository.deleteById(id);
+            return new ResponseEntity<>("Delete cart whit id " + id, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new CustomDatabaseOperationException("An error occurred while deleting payment with ID: " + id,
+                    "DATABASE_OPERATION_EXCEPTION");
         }
     }
 

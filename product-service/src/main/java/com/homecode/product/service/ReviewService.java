@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -64,7 +65,8 @@ public class ReviewService {
             return new ResponseEntity<>(mapToDTO(review), HttpStatus.CREATED);
         } catch (Exception e) {
 
-            throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
+            throw new CustomDatabaseOperationException("An error occurred while deleting review with ID: "
+                    , "DATABASE_OPERATION_EXCEPTION");
         }
 
 
@@ -73,12 +75,18 @@ public class ReviewService {
 
     public ResponseEntity<?> delete(Long id) {
         log.debug("Request to delete Review : {}", id);
+
+        Optional<Review> reviewOptional = this.reviewRepository.findById(id);
+        if (reviewOptional.isEmpty()){
+            throw new CustomNotFoundException("No review whit id " + id,
+                    "REVIEW_NOT_FOUND");
+        }
         try {
             this.reviewRepository.deleteById(id);
             return new ResponseEntity<>("Delete review whit id " + id, HttpStatus.OK);
         } catch (Exception e) {
-            throw new CustomNotFoundException("No review whit id " + id,
-                    "REVIEW_NOT_FOUND");
+            throw new CustomDatabaseOperationException("An error occurred while deleting review with ID: " + id,
+                    "DATABASE_OPERATION_EXCEPTION");
         }
     }
 

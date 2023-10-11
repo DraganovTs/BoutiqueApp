@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -75,19 +76,27 @@ public class OrderItemService {
             this.orderItemRepository.save(orderItem);
             return new ResponseEntity<>(mapToDto(orderItem), HttpStatus.CREATED);
         } catch (Exception e) {
-            throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
+            throw new CustomDatabaseOperationException("An error occurred while creating order item"
+                    , "DATABASE_OPERATION_EXCEPTION");
         }
 
     }
 
 
-    public void delete(Long id) {
+    public ResponseEntity<?> delete(Long id) {
         log.debug("Request to delete OrderItem : {}", id);
-        try {
-            this.orderItemRepository.deleteById(id);
-        } catch (Exception e) {
+
+        Optional<OrderItem> orderItemOptional = this.orderItemRepository.findById(id);
+        if (orderItemOptional.isEmpty()){
             throw new CustomNotFoundException("Not found order item whit id " + id,
                     "ORDER_ITEM_NOT_FOUND");
+        }
+        try {
+            this.orderItemRepository.deleteById(id);
+            return new ResponseEntity<>("Delete order item whit id " + id, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new CustomDatabaseOperationException("An error occurred while deleting order item with ID: " + id,
+                    "DATABASE_OPERATION_EXCEPTION");
         }
     }
 

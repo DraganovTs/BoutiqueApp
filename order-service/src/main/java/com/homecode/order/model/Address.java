@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
@@ -26,13 +25,11 @@ public class Address {
     @Column(name = "city")
     private String city;
 
-    @NotNull
     @Size(max = 10)
-    @Column(name = "postcode", length = 10, nullable = false)
+    @Column(name = "postcode", length = 10)
     private String postcode;
 
-    @NotNull
     @Size(max = 2)
-    @Column(name = "country", length = 2, nullable = false)
+    @Column(name = "country", length = 2)
     private String country;
 }

@@ -29,7 +29,7 @@ public class CartController {
     }
 
     @GetMapping("/customer/carts")
-    public ResponseEntity<CartDTO> getActiveCartForCustomer(@RequestBody Long customerId){
+    public ResponseEntity<CartDTO> getActiveCartForCustomer(@RequestParam Long customerId){
         return this.cartService.getActiveCart(customerId);
     }
 
@@ -39,12 +39,12 @@ public class CartController {
     }
 
     @PostMapping("/customer/create")
-    public ResponseEntity<CartDTO> create(@RequestBody Long customerId){
+    public ResponseEntity<CartDTO> create(@RequestParam Long customerId){
         return this.cartService.create(customerId);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id){
-        this.cartService.delete(id);
+    public ResponseEntity<?> delete(@PathVariable("id") Long id){
+       return this.cartService.delete(id);
     }
 }

@@ -33,7 +33,7 @@ public class OrderItemController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id) {
-        this.orderItemService.delete(id);
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+       return this.orderItemService.delete(id);
     }
 }

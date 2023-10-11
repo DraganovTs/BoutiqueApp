@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -71,7 +72,8 @@ public class CategoryService {
             return new ResponseEntity<>(mapToDTO(category), HttpStatus.CREATED);
 
         } catch (Exception e) {
-            throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
+            throw new CustomDatabaseOperationException("An error occurred while creating category"
+                    , "DATABASE_OPERATION_EXCEPTION");
         }
 
     }
@@ -79,12 +81,18 @@ public class CategoryService {
 
     public ResponseEntity<?> delete(Long id) {
         log.debug("Request to delete Category by id {}", id);
+
+        Optional<Category> categoryOptional = this.categoryRepository.findById(id);
+        if (categoryOptional.isEmpty()){
+            throw new CustomNotFoundException("Not found category whit id " + id,
+                    "CATEGORY_NOT_FOUND");
+        }
         try {
             this.categoryRepository.deleteById(id);
             return new ResponseEntity<>("Delete category whit id " + id, HttpStatus.OK);
         } catch (Exception e) {
-            throw new CustomNotFoundException("Not found category whit id " + id,
-                    "CATEGORY_NOT_FOUND");
+            throw new CustomDatabaseOperationException("An error occurred while deleting category with ID: " + id,
+                    "DATABASE_OPERATION_EXCEPTION");
         }
     }
 

@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -68,7 +69,8 @@ public class OrderService {
             this.orderRepository.save(order);
             return new ResponseEntity<>(mapToDto(order), HttpStatus.CREATED);
         } catch (Exception e) {
-            throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
+            throw new CustomDatabaseOperationException("An error occurred while creating order"
+                    , "DATABASE_OPERATION_EXCEPTION");
         }
     }
 
@@ -82,8 +84,8 @@ public class OrderService {
                 .map(OrderService::mapToDto)
                 .collect(Collectors.toList());
         if (orders.isEmpty()) {
-            throw new CustomNotFoundException("No categories available.",
-                    "CATEGORIES_NOT_FOUND");
+            throw new CustomNotFoundException("No orders available.",
+                    "ORDERS_NOT_FOUND");
         }
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
@@ -115,15 +117,21 @@ public class OrderService {
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
-    public void delete(Long id) {
+    public ResponseEntity<?> delete(Long id) {
         log.debug("Request to delete Order : {}", id);
-        try {
-            this.orderRepository.deleteById(id);
-        } catch (Exception e) {
+
+        Optional<Order> optionalOrder = this.orderRepository.findById(id);
+        if (optionalOrder.isEmpty()){
             throw new CustomNotFoundException("Not found order whit id " + id,
                     "ORDER_NOT_FOUND");
         }
-        this.orderRepository.deleteById(id);
+        try {
+            this.orderRepository.deleteById(id);
+            return new ResponseEntity<>("Delete order whit id " + id, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new CustomDatabaseOperationException("An error occurred while deleting order  with ID: " + id,
+                    "DATABASE_OPERATION_EXCEPTION");
+        }
     }
 
     public static OrderDTO mapToDto(Order order) {

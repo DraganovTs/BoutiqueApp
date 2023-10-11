@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -73,18 +74,27 @@ public class PaymentService {
             this.paymentRepository.save(payment);
             return new ResponseEntity<>(mapToDTO(payment), HttpStatus.CREATED);
         } catch (Exception e) {
-            throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
+            throw new CustomDatabaseOperationException("An error occurred while creating payment"
+                    , "DATABASE_OPERATION_EXCEPTION");
         }
     }
 
 
-    public void delete(Long id) {
+    public ResponseEntity<?> delete(Long id) {
         log.debug("Request to delete Payment : {}", id);
-        try {
-            this.paymentRepository.deleteById(id);
-        } catch (Exception e) {
+
+        Optional<Payment> paymentOptional = this.paymentRepository.findById(id);
+
+        if (paymentOptional.isEmpty()){
             throw new CustomNotFoundException("Not found payment whit id " + id,
                     "PAYMENT_NOT_FOUND");
+        }
+        try {
+            this.paymentRepository.deleteById(id);
+            return new ResponseEntity<>("Delete payment whit id " + id, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new CustomDatabaseOperationException("An error occurred while deleting payment with ID: " + id,
+                    "DATABASE_OPERATION_EXCEPTION");
         }
     }
 

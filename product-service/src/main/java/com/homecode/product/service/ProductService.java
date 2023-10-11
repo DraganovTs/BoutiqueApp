@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -74,7 +75,8 @@ public class ProductService {
         return new ResponseEntity<>(mapToDTO(product), HttpStatus.CREATED);
 
         } catch (Exception e) {
-            throw new CustomDatabaseOperationException(e.getMessage(), "DATABASE_OPERATION_EXCEPTION");
+            throw new CustomDatabaseOperationException("An error occurred while deleting product with ID: "
+                    , "DATABASE_OPERATION_EXCEPTION");
         }
 
     }
@@ -82,12 +84,18 @@ public class ProductService {
 
     public ResponseEntity<?> delete(Long id) {
         log.debug("Request to delete Product by id {}", id);
+
+        Optional<Product> productOptional = this.productRepository.findById(id);
+        if (productOptional.isEmpty()){
+            throw new CustomNotFoundException("Not found product whit id " + id,
+                    "PRODUCT_NOT_FOUND");
+        }
         try {
             this.productRepository.deleteById(id);
             return new ResponseEntity<>("Delete product whit id " + id, HttpStatus.OK);
         } catch (Exception e) {
-            throw new CustomNotFoundException("Not found product whit id " + id,
-                    "PRODUCT_NOT_FOUND");
+            throw new CustomDatabaseOperationException("An error occurred while deleting product with ID: " + id,
+                    "DATABASE_OPERATION_EXCEPTION");
         }
     }
 

@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient("ORDER-SERVICE")
 public interface OrderServiceInterface {
-    @PostMapping("api/carts/createCart")
+    @PostMapping("api/orders/createCart")
     OrderDTO create(@RequestBody CartDTO cartDTO);
 }
