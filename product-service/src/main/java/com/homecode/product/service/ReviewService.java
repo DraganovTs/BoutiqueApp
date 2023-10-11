@@ -71,11 +71,12 @@ public class ReviewService {
     }
 
 
-    public void delete(Long id) {
+    public ResponseEntity<?> delete(Long id) {
         log.debug("Request to delete Review : {}", id);
         try {
-        this.reviewRepository.deleteById(id);
-        }catch (Exception e){
+            this.reviewRepository.deleteById(id);
+            return new ResponseEntity<>("Delete review whit id " + id, HttpStatus.OK);
+        } catch (Exception e) {
             throw new CustomNotFoundException("No review whit id " + id,
                     "REVIEW_NOT_FOUND");
         }
@@ -83,7 +84,7 @@ public class ReviewService {
 
     public static ReviewDTO mapToDTO(Review review) {
         if (review == null) {
-            throw  new CustomValidationException("Not valid review",
+            throw new CustomValidationException("Not valid review",
                     "REVIEW_NOT_VALID");
         }
         return new ReviewDTO(

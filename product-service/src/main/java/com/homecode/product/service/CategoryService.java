@@ -77,10 +77,11 @@ public class CategoryService {
     }
 
 
-    public void delete(Long id) {
+    public ResponseEntity<?> delete(Long id) {
         log.debug("Request to delete Category by id {}", id);
         try {
             this.categoryRepository.deleteById(id);
+            return new ResponseEntity<>("Delete category whit id " + id, HttpStatus.OK);
         } catch (Exception e) {
             throw new CustomNotFoundException("Not found category whit id " + id,
                     "CATEGORY_NOT_FOUND");
@@ -109,10 +110,12 @@ public class CategoryService {
             throw new CustomValidationException("Not valid category",
                     "CATEGORY_NOT_VALID");
         }
+
         return new Category(
                 categoryDTO.getName(),
                 categoryDTO.getDescription(),
-                new HashSet<>()
-        );
+                new HashSet<>());
+
+
     }
 }

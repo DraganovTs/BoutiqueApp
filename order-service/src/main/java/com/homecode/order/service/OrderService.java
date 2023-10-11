@@ -6,6 +6,7 @@ import com.homecode.commons.dto.OrderDTO;
 import com.homecode.commons.exception.CustomDatabaseOperationException;
 import com.homecode.commons.exception.CustomNotFoundException;
 import com.homecode.commons.exception.CustomValidationException;
+import com.homecode.order.model.Address;
 import com.homecode.order.model.Order;
 import com.homecode.order.model.enums.OrderStatus;
 import com.homecode.order.repository.OrderRepository;
@@ -42,6 +43,15 @@ public class OrderService {
                     Collections.emptySet(),
                     cartDTO.getId()
             );
+            //todo set address from user info
+            Address shipmentAddress = new Address();
+            shipmentAddress.setAddress1("123 Main St");
+            shipmentAddress.setAddress2("1232 Main St");
+            shipmentAddress.setCity("CityName");
+            shipmentAddress.setPostcode("9000");
+            shipmentAddress.setCountry("bg");
+
+            order.setShipmentAddress(shipmentAddress);
             this.orderRepository.save(order);
             return mapToDto(order);
         } catch (Exception e) {

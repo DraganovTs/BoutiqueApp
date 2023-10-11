@@ -80,10 +80,11 @@ public class ProductService {
     }
 
 
-    public void delete(Long id) {
+    public ResponseEntity<?> delete(Long id) {
         log.debug("Request to delete Product by id {}", id);
         try {
             this.productRepository.deleteById(id);
+            return new ResponseEntity<>("Delete product whit id " + id, HttpStatus.OK);
         } catch (Exception e) {
             throw new CustomNotFoundException("Not found product whit id " + id,
                     "PRODUCT_NOT_FOUND");
