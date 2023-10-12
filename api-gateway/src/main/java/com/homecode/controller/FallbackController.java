@@ -21,4 +21,5 @@ public class FallbackController {
     public String productServiceFallback() {
         return "Fallback response for product service";
     }
+
 }

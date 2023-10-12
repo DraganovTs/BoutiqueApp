@@ -10,6 +10,7 @@
         <module>config-server</module>
         <module>discovery-service</module>
         <module>api-gateway</module>
+        <module>auth-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -39,6 +40,7 @@
         <zipkin-reporter-brave.version>2.16.4</zipkin-reporter-brave.version>
         <spring-cloud-starter-gateway.version>4.0.7</spring-cloud-starter-gateway.version>
         <spring-cloud-starter-circuitbreaker-reactor-resilience4.version>3.0.3</spring-cloud-starter-circuitbreaker-reactor-resilience4.version>
+        <io.jsonwebtoken.version>0.11.5</io.jsonwebtoken.version>
     </properties>
 
     <dependencyManagement>
@@ -176,7 +178,28 @@
                 <artifactId>spring-cloud-starter-openfeign</artifactId>
                 <version>${spring.cloud.config.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${io.jsonwebtoken.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${io.jsonwebtoken.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${io.jsonwebtoken.version}</version>
+                <scope>runtime</scope>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

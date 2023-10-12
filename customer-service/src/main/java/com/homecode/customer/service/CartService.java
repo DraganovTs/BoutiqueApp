@@ -106,6 +106,7 @@ public class CartService {
                     customer,
                     CartStatus.NEW
             );
+            //TODO add Resilience4J
             OrderDTO order = this.orderService.create(mapToDTO(cart));
             cart.setOrderId(order.getId());
             try {
