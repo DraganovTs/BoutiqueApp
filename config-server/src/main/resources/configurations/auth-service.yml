@@ -4,3 +4,9 @@ server:
 spring:
   application:
     name: auth-service
+
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

@@ -1,8 +1,10 @@
 package com.homecode.controller;
 
 import com.homecode.model.UserCredential;
+import com.homecode.model.model.UserCredentialDTO;
 import com.homecode.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,13 +19,13 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public String addNewUser(@RequestBody  UserCredential user) {
+    public ResponseEntity<UserCredentialDTO> addNewUser(@RequestBody UserCredentialDTO user) {
         return authService.saveUser(user);
     }
 
-    @GetMapping("/token")
-    public String getToken(UserCredential user) {
-        return authService.generateToken(user.getName());
+    @PostMapping("/token")
+    public String getToken(@RequestBody UserCredentialDTO user) {
+        return authService.generateToken(user.getUsername());
     }
 
     @GetMapping("/validate")
