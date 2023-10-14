@@ -22,4 +22,9 @@ public class FallbackController {
         return "Fallback response for product service";
     }
 
+    @GetMapping("/fallback/auth")
+    public String authServiceFallback() {
+        return "Fallback response for auth service";
+    }
+
 }

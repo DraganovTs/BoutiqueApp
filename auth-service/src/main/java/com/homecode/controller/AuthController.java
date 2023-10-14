@@ -1,10 +1,14 @@
 package com.homecode.controller;
 
 import com.homecode.model.UserCredential;
+import com.homecode.commons.exception.CustomIllegalStateException;
 import com.homecode.model.model.UserCredentialDTO;
 import com.homecode.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +21,7 @@ import static com.homecode.commons.utils.Web.API;
 public class AuthController {
 
     private final AuthService authService;
+    private final AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
     public ResponseEntity<UserCredentialDTO> addNewUser(@RequestBody UserCredentialDTO user) {
@@ -25,7 +30,13 @@ public class AuthController {
 
     @PostMapping("/token")
     public String getToken(@RequestBody UserCredentialDTO user) {
+        Authentication authenticate = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        if (authenticate.isAuthenticated()){
         return authService.generateToken(user.getUsername());
+        }else {
+            throw new CustomIllegalStateException("Invalid access","INVALID_ACCESS");
+        }
     }
 
     @GetMapping("/validate")

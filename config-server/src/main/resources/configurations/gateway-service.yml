@@ -15,6 +15,7 @@ spring:
           predicates:
             - Path=/api/customers/**,/api/carts/**
           filters:
+            - name: AuthFilter
             - name: CircuitBreaker
               args:
                 name: customer-service
@@ -24,6 +25,7 @@ spring:
           predicates:
             - Path=/api/orders/**,/api/order-items/**,/api/payments/**
           filters:
+            - name: AuthFilter
             - name: CircuitBreaker
               args:
                 name: order-service
@@ -33,10 +35,20 @@ spring:
           predicates:
             - Path=/api/products/**,/api/categories/**,/api/reviews/**
           filters:
+            - name: AuthFilter
             - name: CircuitBreaker
               args:
                 name: product-service
                 fallbackUri: forward:/fallback/products
+        - id: auth-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: auth-service
+                fallbackUri: forward:/fallback/auth
 
 
 springdoc:

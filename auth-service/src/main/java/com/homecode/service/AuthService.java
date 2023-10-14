@@ -1,12 +1,12 @@
 package com.homecode.service;
 
+import com.homecode.model.UserCredential;
+import com.homecode.model.model.UserCredentialDTO;
+import com.homecode.repository.UserCredentialRepository;
 import com.homecode.commons.exception.CustomAlreadyExistException;
 import com.homecode.commons.exception.CustomDatabaseOperationException;
 import com.homecode.commons.exception.CustomIllegalStateException;
 import com.homecode.commons.exception.CustomValidationException;
-import com.homecode.model.UserCredential;
-import com.homecode.model.model.UserCredentialDTO;
-import com.homecode.repository.UserCredentialRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
