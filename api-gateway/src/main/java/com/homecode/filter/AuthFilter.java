@@ -1,5 +1,7 @@
 package com.homecode.filter;
 
+import com.homecode.commons.exception.MissingAuthorizationException;
+import com.homecode.commons.exception.UnauthorizedAccessException;
 import com.homecode.util.JwtUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -26,7 +28,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                 if (!exchange.getRequest()
                         .getHeaders()
                         .containsKey(HttpHeaders.AUTHORIZATION)) {
-                    throw new RuntimeException("missing authorization");
+                    throw new MissingAuthorizationException("Authorization header is missing");
                     //todo custom exception
                 }
                 String authHeaders = exchange
@@ -42,7 +44,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                     jwtUtil.validateToken(authHeaders);
                 }catch (Exception e){
                     //todo Custom exception
-                    throw new RuntimeException("not authorized access to application");
+                    throw new UnauthorizedAccessException("Not authorized access to application");
                 }
             }
 
