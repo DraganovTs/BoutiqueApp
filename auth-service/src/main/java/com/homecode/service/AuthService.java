@@ -22,8 +22,9 @@ import java.util.List;
 public class AuthService {
     private final UserCredentialRepository userCredentialRepository;
     private final PasswordEncoder passwordEncoder;
-
     private final JwtService jwtService;
+
+    private final MailService mailService;
 
     public ResponseEntity<UserCredentialDTO> saveUser(UserCredentialDTO credential) {
         if (!credential.getPassword().equals(credential.getRepeatPassword())) {
@@ -38,6 +39,7 @@ public class AuthService {
         try {
             UserCredential user = mapToUser(credential);
             this.userCredentialRepository.save(user);
+            this.mailService.sendWelcomeMail(user);
             return new ResponseEntity<>(mapToDto(user), HttpStatus.CREATED);
         } catch (Exception e) {
             throw new CustomDatabaseOperationException("An error occurred while creating user"

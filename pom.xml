@@ -42,6 +42,7 @@
         <spring-cloud-starter-gateway.version>4.0.7</spring-cloud-starter-gateway.version>
         <spring-cloud-starter-circuitbreaker-reactor-resilience4.version>3.0.3</spring-cloud-starter-circuitbreaker-reactor-resilience4.version>
         <io.jsonwebtoken.version>0.11.5</io.jsonwebtoken.version>
+        <spring-kafka.version>3.0.7</spring-kafka.version>
     </properties>
 
     <dependencyManagement>
@@ -200,6 +201,11 @@
                 <artifactId>jjwt-jackson</artifactId>
                 <version>${io.jsonwebtoken.version}</version>
                 <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka</artifactId>
+                <version>${spring-kafka.version}</version>
             </dependency>
 
         </dependencies>
