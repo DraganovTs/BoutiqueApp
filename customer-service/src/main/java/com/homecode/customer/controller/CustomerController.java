@@ -36,7 +36,8 @@ public class CustomerController {
         return this.customerService.findAllInactive();
     }
     @PostMapping("/create")
-    public CustomerDTO create(@RequestBody CustomerDTO customerDTO) {
+    public CustomerDTO create(@RequestBody CustomerDTO customerDTO,@RequestHeader("loggedInUser") String username) {
+        System.out.println("logged user name is :" + username);
       return this.customerService.create(customerDTO);
     }
 

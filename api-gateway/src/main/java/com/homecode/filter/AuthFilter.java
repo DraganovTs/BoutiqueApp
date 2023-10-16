@@ -6,6 +6,7 @@ import com.homecode.util.JwtUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,6 +24,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
     @Override
     public GatewayFilter apply(Config config) {
         return (((exchange, chain) -> {
+            ServerHttpRequest userInfo = null;
             if (validator.isSecured.test(exchange.getRequest())) {
                 //header contains token or not
                 if (!exchange.getRequest()
@@ -42,13 +44,19 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                 try {
                     //Rest call to AUTH service but less secured
                     jwtUtil.validateToken(authHeaders);
+
+                    userInfo = exchange.getRequest()
+                            .mutate()
+                            .header("loggedInUser", jwtUtil.extractUsername(authHeaders))
+                            .build();
+
                 }catch (Exception e){
                     //todo Custom exception
                     throw new UnauthorizedAccessException("Not authorized access to application");
                 }
             }
 
-            return chain.filter(exchange);
+            return chain.filter(exchange.mutate().request(userInfo).build());
         }));
     }
 

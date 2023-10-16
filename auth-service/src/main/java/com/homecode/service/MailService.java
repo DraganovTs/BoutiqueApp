@@ -11,7 +11,7 @@ public class MailService {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public void sendWelcomeMail(UserCredential user) {
-        this.kafkaTemplate.send("mails", "user.creation: " + user.getName());
-    }
+//    public void sendWelcomeMail(UserCredential user) {
+//        this.kafkaTemplate.send("mails", "user.creation: " + user.getName());
+//    }
 }

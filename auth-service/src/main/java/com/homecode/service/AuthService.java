@@ -39,7 +39,7 @@ public class AuthService {
         try {
             UserCredential user = mapToUser(credential);
             this.userCredentialRepository.save(user);
-            this.mailService.sendWelcomeMail(user);
+//            this.mailService.sendWelcomeMail(user);
             return new ResponseEntity<>(mapToDto(user), HttpStatus.CREATED);
         } catch (Exception e) {
             throw new CustomDatabaseOperationException("An error occurred while creating user"

@@ -11,5 +11,5 @@ management:
     sampling:
       probability: 1.0
 
-kafka:
-  bootstrapAddress: localhost:9092
+#kafka:
+#  bootstrapAddress: localhost:9092
