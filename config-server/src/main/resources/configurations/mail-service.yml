@@ -4,6 +4,16 @@ server:
 spring:
   application:
     name: mail-service
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${mailUsername}
+    password: ${mailPassword}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls: true
 
 management:
   tracing:
@@ -12,4 +22,3 @@ management:
 
 kafka:
   bootstrapAddress: localhost:9092
-#kafka.bootstrapAddress: localhost:9092
