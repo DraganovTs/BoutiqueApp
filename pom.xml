@@ -43,6 +43,8 @@
         <spring-cloud-starter-circuitbreaker-reactor-resilience4.version>3.0.3</spring-cloud-starter-circuitbreaker-reactor-resilience4.version>
         <io.jsonwebtoken.version>0.11.5</io.jsonwebtoken.version>
         <spring-kafka.version>3.0.7</spring-kafka.version>
+        <logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
+        <logback-core-classic.version>1.4.11</logback-core-classic.version>
     </properties>
 
     <dependencyManagement>
@@ -212,7 +214,21 @@
                 <artifactId>spring-boot-starter-mail</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback-encoder.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback-core-classic.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback-core-classic.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

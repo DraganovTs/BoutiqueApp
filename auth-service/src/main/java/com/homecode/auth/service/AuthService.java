@@ -27,6 +27,7 @@ public class AuthService {
     private final MailService mailService;
 
     public ResponseEntity<UserCredentialDTO> saveUser(UserCredentialDTO credential) {
+        log.info("Try to save user {}" , credential);
         if (!credential.getPassword().equals(credential.getRepeatPassword())) {
             throw new CustomIllegalStateException("Password and repeat password are not the same",
                     "USER_PASSWORDS_NOT_MATCH");
@@ -40,6 +41,7 @@ public class AuthService {
             UserCredential user = mapToUser(credential);
             this.userCredentialRepository.save(user);
             this.mailService.sendWelcomeMail(user);
+            log.info("Send mail to user {}",user);
             return new ResponseEntity<>(mapToDto(user), HttpStatus.CREATED);
         } catch (Exception e) {
             throw new CustomDatabaseOperationException("An error occurred while creating user"
@@ -72,10 +74,12 @@ public class AuthService {
     }
 
     public String generateToken(String username) {
+        log.info("Try to generate token");
         return jwtService.generateToken(username);
     }
 
     public void validateToken(String token) {
+        log.info("Try to validate token");
         jwtService.validateToken(token);
     }
 
