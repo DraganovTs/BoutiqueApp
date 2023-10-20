@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  common:
+    image: com.homecode/commons.service:0.0.1-SNAPSHOT  # Define the image name and tag
+    hostname: commons
+    ports:
+      - '8099-8099'
+    restart: on-failure
+    networks:
+      - ${GLOBAL_NETWORK:-services}

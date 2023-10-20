@@ -12,7 +12,7 @@ services:
     ports:
       - '9200:9200'
     networks:
-      - elk
+      - ${GLOBAL_NETWORK:-kafka}
 
   Logstash:
     image: logstash:latest
@@ -28,7 +28,7 @@ services:
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
-      - elk
+      - ${GLOBAL_NETWORK:-kafka}
 
   Kibana:
     image: kibana:latest
@@ -41,9 +41,7 @@ services:
     depends_on:
       - Elasticsearch
     networks:
-      - elk
+      - ${GLOBAL_NETWORK:-kafka}
 volumes:
   elastic_data: {}
 
-networks:
-  elk:
