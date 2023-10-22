@@ -3,15 +3,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <modules>
-        <module>product-service</module>
-        <module>commons</module>
-        <module>customer-service</module>
-        <module>order-service</module>
-        <module>config-server</module>
-        <module>discovery-service</module>
-        <module>api-gateway</module>
-        <module>auth-service</module>
-        <module>mail-service</module>
+<!--        <module>product-service</module>-->
+<!--        <module>commons</module>-->
+<!--        <module>customer-service</module>-->
+<!--        <module>order-service</module>-->
+<!--        <module>config-server</module>-->
+<!--        <module>discovery-service</module>-->
+<!--        <module>api-gateway</module>-->
+<!--        <module>auth-service</module>-->
+<!--        <module>mail-service</module>-->
+        <module>commons-module</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -45,11 +46,12 @@
         <spring-kafka.version>3.0.7</spring-kafka.version>
         <logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
         <logback-core-classic.version>1.4.11</logback-core-classic.version>
+        <jackson-annotations.version>2.15.3</jackson-annotations.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- Inside dependencies -->
+<!--           Inside dependencies -->
 
             <dependency>
                 <groupId>com.homecode</groupId>
@@ -73,7 +75,7 @@
             </dependency>
 
 
-            <!-- Outside dependencies -->
+<!--             Outside dependencies -->
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -228,6 +230,11 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback-core-classic.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson-annotations.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
