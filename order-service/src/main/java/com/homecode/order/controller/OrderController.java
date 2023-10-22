@@ -1,7 +1,8 @@
 package com.homecode.order.controller;
 
-import com.homecode.dto.CartDTO;
-import com.homecode.dto.OrderDTO;
+
+import com.homecode.commons.module.dto.CartDTO;
+import com.homecode.commons.module.dto.OrderDTO;
 import com.homecode.order.service.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.homecode.utils.Web.API;
+import static com.homecode.commons.module.utils.Web.API;
 
 
 @AllArgsConstructor

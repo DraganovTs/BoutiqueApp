@@ -1,11 +1,11 @@
 package com.homecode.product.service;
 
 
-import com.homecode.dto.ProductDTO;
-import com.homecode.exception.CustomAlreadyExistException;
-import com.homecode.exception.CustomDatabaseOperationException;
-import com.homecode.exception.CustomNotFoundException;
-import com.homecode.exception.CustomValidationException;
+import com.homecode.commons.module.dto.ProductDTO;
+import com.homecode.commons.module.exception.CustomAlreadyExistException;
+import com.homecode.commons.module.exception.CustomDatabaseOperationException;
+import com.homecode.commons.module.exception.CustomNotFoundException;
+import com.homecode.commons.module.exception.CustomValidationException;
 import com.homecode.product.model.Product;
 import com.homecode.product.model.enums.ProductStatus;
 import com.homecode.product.repository.CategoryRepository;

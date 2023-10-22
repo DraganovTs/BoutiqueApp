@@ -1,7 +1,7 @@
 package com.homecode.product.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.homecode.domain.AbstractEntity;
+import com.homecode.commons.module.domain.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;

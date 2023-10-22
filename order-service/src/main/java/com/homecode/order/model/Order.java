@@ -1,7 +1,7 @@
 package com.homecode.order.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.homecode.domain.AbstractEntity;
+import com.homecode.commons.module.domain.AbstractEntity;
 import com.homecode.order.model.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

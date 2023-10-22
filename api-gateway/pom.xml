@@ -14,7 +14,7 @@
    <dependencies>
        <dependency>
            <groupId>com.homecode</groupId>
-           <artifactId>commons</artifactId>
+           <artifactId>commons-module</artifactId>
        </dependency>
        <dependency>
            <groupId>org.springframework.cloud</groupId>

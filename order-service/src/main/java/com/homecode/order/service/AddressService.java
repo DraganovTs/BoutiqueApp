@@ -1,7 +1,8 @@
 package com.homecode.order.service;
 
 
-import com.homecode.dto.AddressDTO;
+
+import com.homecode.commons.module.dto.AddressDTO;
 import com.homecode.order.model.Address;
 
 public class AddressService {

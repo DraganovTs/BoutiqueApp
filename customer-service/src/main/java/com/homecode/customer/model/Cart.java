@@ -1,6 +1,6 @@
 package com.homecode.customer.model;
 
-import com.homecode.domain.AbstractEntity;
+import com.homecode.commons.module.domain.AbstractEntity;
 import com.homecode.customer.model.enums.CartStatus;
 import jakarta.persistence.*;
 import lombok.*;

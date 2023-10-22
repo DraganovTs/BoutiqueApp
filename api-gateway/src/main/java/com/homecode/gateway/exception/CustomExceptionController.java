@@ -1,8 +1,9 @@
 package com.homecode.gateway.exception;
 
 
-import com.homecode.exception.MissingAuthorizationException;
-import com.homecode.exception.UnauthorizedAccessException;
+
+import com.homecode.commons.module.exception.MissingAuthorizationException;
+import com.homecode.commons.module.exception.UnauthorizedAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

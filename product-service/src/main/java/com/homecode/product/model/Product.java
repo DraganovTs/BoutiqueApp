@@ -1,6 +1,6 @@
 package com.homecode.product.model;
 
-import com.homecode.domain.AbstractEntity;
+import com.homecode.commons.module.domain.AbstractEntity;
 import com.homecode.product.model.enums.ProductStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

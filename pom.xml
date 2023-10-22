@@ -3,15 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <modules>
-<!--        <module>product-service</module>-->
-<!--        <module>commons</module>-->
-<!--        <module>customer-service</module>-->
-<!--        <module>order-service</module>-->
-<!--        <module>config-server</module>-->
-<!--        <module>discovery-service</module>-->
-<!--        <module>api-gateway</module>-->
-<!--        <module>auth-service</module>-->
-<!--        <module>mail-service</module>-->
+        <module>product-service</module>
+        <module>customer-service</module>
+        <module>order-service</module>
+        <module>config-server</module>
+        <module>discovery-service</module>
+        <module>api-gateway</module>
+        <module>auth-service</module>
+        <module>mail-service</module>
         <module>commons-module</module>
     </modules>
     <parent>
@@ -55,7 +54,7 @@
 
             <dependency>
                 <groupId>com.homecode</groupId>
-                <artifactId>commons</artifactId>
+                <artifactId>commons-module</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
