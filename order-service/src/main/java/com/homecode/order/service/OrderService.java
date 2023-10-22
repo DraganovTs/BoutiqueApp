@@ -1,11 +1,11 @@
 package com.homecode.order.service;
 
 
-import com.homecode.commons.dto.CartDTO;
-import com.homecode.commons.dto.OrderDTO;
-import com.homecode.commons.exception.CustomDatabaseOperationException;
-import com.homecode.commons.exception.CustomNotFoundException;
-import com.homecode.commons.exception.CustomValidationException;
+import com.homecode.dto.CartDTO;
+import com.homecode.dto.OrderDTO;
+import com.homecode.exception.CustomDatabaseOperationException;
+import com.homecode.exception.CustomNotFoundException;
+import com.homecode.exception.CustomValidationException;
 import com.homecode.order.model.Address;
 import com.homecode.order.model.Order;
 import com.homecode.order.model.enums.OrderStatus;

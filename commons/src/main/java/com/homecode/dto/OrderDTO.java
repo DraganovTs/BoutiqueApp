@@ -1,9 +1,9 @@
-package com.homecode.commons.dto;
-
+package com.homecode.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.Set;
@@ -25,5 +25,4 @@ public class OrderDTO {
     private AddressDTO shipmentAddress;
 
     private Set<OrderItemDTO> orderItems;
-
 }

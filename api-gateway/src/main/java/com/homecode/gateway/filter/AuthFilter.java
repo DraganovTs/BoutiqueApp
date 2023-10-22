@@ -1,7 +1,7 @@
 package com.homecode.gateway.filter;
 
-import com.homecode.commons.exception.MissingAuthorizationException;
-import com.homecode.commons.exception.UnauthorizedAccessException;
+import com.homecode.exception.MissingAuthorizationException;
+import com.homecode.exception.UnauthorizedAccessException;
 import com.homecode.gateway.util.JwtUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;

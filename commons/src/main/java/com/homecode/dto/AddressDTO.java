@@ -1,5 +1,4 @@
-package com.homecode.commons.dto;
-
+package com.homecode.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +7,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddressDTO {
-
-
     private String address1;
 
 

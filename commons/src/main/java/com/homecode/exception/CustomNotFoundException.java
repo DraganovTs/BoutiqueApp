@@ -1,14 +1,14 @@
-package com.homecode.commons.exception;
-
+package com.homecode.exception;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
+
 @Data
-public class CustomAccessDeniedException extends RuntimeException {
+public class CustomNotFoundException extends RuntimeException{
     private String errorCode;
 
-    public CustomAccessDeniedException(String message, String errorCode) {
+    public CustomNotFoundException(String message, String errorCode) {
         super(message);
         this.errorCode = errorCode;
     }

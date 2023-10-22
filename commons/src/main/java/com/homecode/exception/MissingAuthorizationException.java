@@ -1,4 +1,4 @@
-package com.homecode.commons.exception;
+package com.homecode.exception;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,5 +10,4 @@ public class MissingAuthorizationException extends RuntimeException{
     public MissingAuthorizationException(String message) {
         super(message);
     }
-
 }

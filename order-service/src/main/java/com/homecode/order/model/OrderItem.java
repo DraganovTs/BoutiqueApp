@@ -1,6 +1,6 @@
 package com.homecode.order.model;
 
-import com.homecode.commons.domain.AbstractEntity;
+import com.homecode.domain.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;

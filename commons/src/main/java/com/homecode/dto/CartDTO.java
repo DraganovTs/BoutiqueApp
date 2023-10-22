@@ -1,6 +1,4 @@
-package com.homecode.commons.dto;
-
-
+package com.homecode.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,14 +6,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentDTO {
-
-
+public class CartDTO {
     private Long id;
-
-    private String paypalPaymentId;
-
-    private String status;
-
     private Long orderId;
+    private CustomerDTO customerDTO;
+    private String status;
 }

@@ -1,6 +1,6 @@
 package com.homecode.order.model;
 
-import com.homecode.commons.domain.AbstractEntity;
+import com.homecode.domain.AbstractEntity;
 import com.homecode.order.model.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

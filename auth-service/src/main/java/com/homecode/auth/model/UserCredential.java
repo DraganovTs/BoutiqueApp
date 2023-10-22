@@ -1,6 +1,6 @@
 package com.homecode.auth.model;
 
-import com.homecode.commons.domain.AbstractEntity;
+import com.homecode.domain.AbstractEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;

@@ -1,14 +1,13 @@
-package com.homecode.commons.exception;
-
+package com.homecode.exception;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class CustomIllegalStateException extends RuntimeException {
+public class CustomAlreadyExistException extends RuntimeException{
     private String errorCode;
 
-    public CustomIllegalStateException(String message, String errorCode) {
+    public CustomAlreadyExistException(String message, String errorCode) {
         super(message);
         this.errorCode = errorCode;
     }

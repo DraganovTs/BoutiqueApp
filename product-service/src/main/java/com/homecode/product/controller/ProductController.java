@@ -1,6 +1,6 @@
 package com.homecode.product.controller;
 
-import com.homecode.commons.dto.ProductDTO;
+import com.homecode.dto.ProductDTO;
 import com.homecode.product.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.homecode.commons.utils.Web.API;
+import static com.homecode.utils.Web.API;
 
 
 @AllArgsConstructor

@@ -1,9 +1,9 @@
 package com.homecode.auth.exception;
 
 
-import com.homecode.commons.exception.CustomAccessDeniedException;
-import com.homecode.commons.exception.CustomBadCredentialException;
-import com.homecode.commons.exception.model.ErrorResponse;
+import com.homecode.exception.CustomAccessDeniedException;
+import com.homecode.exception.CustomBadCredentialException;
+import com.homecode.exception.error.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

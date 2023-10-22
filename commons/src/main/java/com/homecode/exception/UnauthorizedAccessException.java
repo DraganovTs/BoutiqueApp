@@ -1,5 +1,4 @@
-package com.homecode.commons.exception;
-
+package com.homecode.exception;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

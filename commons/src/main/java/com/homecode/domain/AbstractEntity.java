@@ -1,4 +1,4 @@
-package com.homecode.commons.domain;
+package com.homecode.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -15,7 +15,6 @@ import java.time.Instant;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class AbstractEntity {
-
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -32,5 +31,3 @@ public class AbstractEntity {
     @JsonIgnore
     private Instant lastModifiedDate = Instant.now();
 }
-
-

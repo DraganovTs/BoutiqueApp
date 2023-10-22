@@ -1,10 +1,10 @@
 package com.homecode.order.exception;
 
-import com.homecode.commons.exception.CustomAlreadyExistException;
-import com.homecode.commons.exception.CustomDatabaseOperationException;
-import com.homecode.commons.exception.CustomNotFoundException;
-import com.homecode.commons.exception.CustomValidationException;
-import com.homecode.commons.exception.model.ErrorResponse;
+import com.homecode.exception.CustomAlreadyExistException;
+import com.homecode.exception.CustomDatabaseOperationException;
+import com.homecode.exception.CustomNotFoundException;
+import com.homecode.exception.CustomValidationException;
+import com.homecode.exception.error.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

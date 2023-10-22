@@ -1,6 +1,4 @@
-package com.homecode.commons.dto;
-
-
+package com.homecode.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,13 +6,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReviewDTO {
+public class PaymentDTO {
+
 
     private Long id;
 
-    private String title;
+    private String paypalPaymentId;
 
-    private String description;
+    private String status;
 
-    private Long rating;
+    private Long orderId;
 }

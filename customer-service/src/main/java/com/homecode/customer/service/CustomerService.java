@@ -1,6 +1,6 @@
 package com.homecode.customer.service;
 
-import com.homecode.commons.dto.CustomerDTO;
+import com.homecode.dto.CustomerDTO;
 import com.homecode.customer.model.Customer;
 import com.homecode.customer.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;

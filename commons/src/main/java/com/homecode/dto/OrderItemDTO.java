@@ -1,6 +1,4 @@
-package com.homecode.commons.dto;
-
-
+package com.homecode.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
