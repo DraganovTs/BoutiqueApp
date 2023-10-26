@@ -1,11 +1,12 @@
 package com.homecode.product.service;
 
-import com.homecode.commons.module.dto.CategoryDTO;
-import com.homecode.commons.module.exception.CustomAlreadyExistException;
-import com.homecode.commons.module.exception.CustomDatabaseOperationException;
-import com.homecode.commons.module.exception.CustomNotFoundException;
-import com.homecode.commons.module.exception.CustomValidationException;
-import com.homecode.product.model.Category;
+
+import com.homecode.product.exception.CustomAlreadyExistException;
+import com.homecode.product.exception.CustomDatabaseOperationException;
+import com.homecode.product.exception.CustomNotFoundException;
+import com.homecode.product.exception.CustomValidationException;
+import com.homecode.product.model.dto.CategoryDTO;
+import com.homecode.product.model.entity.Category;
 import com.homecode.product.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -2,12 +2,23 @@ server:
   port: 8888
 
 spring:
-  profiles:
-    active: native
   application:
-    name: config-server
+    name: configserver
   cloud:
     config:
       server:
-        native:
-          search-locations: classpath:/configurations
+        git:
+          uri: https://github.com/DraganovTs/config-server-boutique-app
+          default-label: main
+          search-paths: config-server-repository
+          clone-on-start: true
+      fail-fast: true
+
+
+
+logging:
+  file:
+    name: config-server
+  level:
+    ROOT: INFO
+    org.spring.framework.cloud.config: DEBUG

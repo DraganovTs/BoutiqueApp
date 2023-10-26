@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  product-service:
+    image: ${GROUP_ID}/product.service:${SERVICE_VERSION:-latest}
+    ports:
+      - '8090:8090'
+    environment:
+      - "jdbc:h2:tcp://my-h2/my-db-name"
+    networks:
+      - ${GLOBAL_NETWORK:-services}

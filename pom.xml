@@ -12,6 +12,7 @@
         <module>auth-service</module>
         <module>mail-service</module>
         <module>commons-module</module>
+        <module>app-config-data</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -51,7 +52,11 @@
     <dependencyManagement>
         <dependencies>
 <!--           Inside dependencies -->
-
+            <dependency>
+                <groupId>com.homecode</groupId>
+                <artifactId>app-config-data</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.homecode</groupId>
                 <artifactId>commons-module</artifactId>
