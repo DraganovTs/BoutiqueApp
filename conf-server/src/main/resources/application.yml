@@ -9,16 +9,12 @@ spring:
       server:
         git:
           uri: https://github.com/DraganovTs/config-server-boutique-app
-          default-label: main
-          search-paths: config-server-repository
           clone-on-start: true
+          default-label: master
+          search-paths: config-server-boutique-app
       fail-fast: true
 
-
-
 logging:
-  file:
-    name: config-server
   level:
-    ROOT: INFO
-    org.spring.framework.cloud.config: DEBUG
+    root: INFO
+    org.springframework.cloud.config: DEBUG
