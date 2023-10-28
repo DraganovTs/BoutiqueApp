@@ -54,12 +54,12 @@
 <!--           Inside dependencies -->
             <dependency>
                 <groupId>com.homecode</groupId>
-                <artifactId>app-config-data</artifactId>
+                <artifactId>commons-module</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.homecode</groupId>
-                <artifactId>commons-module</artifactId>
+                <artifactId>app-config-data</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

@@ -1,6 +1,14 @@
 spring:
-  config:
-    import: optional:configserver:http://localhost:8888
   application:
     name: order-service
+  profiles:
+    active: order-service
+  config:
+    import: 'configserver:'
+  cloud:
+    config:
+      name: order_service,config-client
 
+logging:
+  level:
+    root: info
