@@ -1,8 +1,8 @@
 package com.homecode.customer.service;
 
 
-import com.homecode.commons.module.dto.CustomerDTO;
-import com.homecode.customer.model.Customer;
+import com.homecode.customer.model.dto.CustomerDTO;
+import com.homecode.customer.model.entity.Customer;
 import com.homecode.customer.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -2,7 +2,7 @@ package com.homecode.product.controller;
 
 
 
-import com.homecode.commons.module.dto.ReviewDTO;
+import com.homecode.product.model.dto.ReviewDTO;
 import com.homecode.product.service.ReviewService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.homecode.commons.module.utils.Web.API;
+import static com.homecode.product.utils.Web.API;
 
 
 @AllArgsConstructor

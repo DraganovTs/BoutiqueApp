@@ -1,5 +1,14 @@
 spring:
-  config:
-    import: optional:configserver:http://localhost:8888
   application:
-    name: gateway-service
+    name: api-gateway
+  profiles:
+    active: api-gateway
+  config:
+    import: 'configserver:'
+  cloud:
+    config:
+      name: api_gateway,config-client
+
+logging:
+  level:
+    root: info

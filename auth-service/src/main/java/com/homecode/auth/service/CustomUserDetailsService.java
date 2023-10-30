@@ -1,9 +1,9 @@
 package com.homecode.auth.service;
 
 import com.homecode.auth.config.CustomUserDetails;
-import com.homecode.auth.model.UserCredential;
+import com.homecode.auth.exception.CustomNotFoundException;
+import com.homecode.auth.model.entity.UserCredential;
 import com.homecode.auth.repository.UserCredentialRepository;
-import com.homecode.commons.module.exception.CustomNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

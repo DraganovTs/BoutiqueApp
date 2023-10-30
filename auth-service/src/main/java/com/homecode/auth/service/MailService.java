@@ -1,6 +1,6 @@
 package com.homecode.auth.service;
 
-import com.homecode.auth.model.UserCredential;
+import com.homecode.auth.model.entity.UserCredential;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.homecode.product.repository;
 
-import com.homecode.product.model.Product;
+import com.homecode.product.model.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package com.homecode.customer.repository;
 
-import com.homecode.customer.model.Customer;
+import com.homecode.customer.model.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

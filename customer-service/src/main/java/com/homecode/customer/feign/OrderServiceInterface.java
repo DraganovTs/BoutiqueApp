@@ -2,8 +2,9 @@ package com.homecode.customer.feign;
 
 
 
-import com.homecode.commons.module.dto.CartDTO;
-import com.homecode.commons.module.dto.OrderDTO;
+
+import com.homecode.customer.model.dto.CartDTO;
+import com.homecode.customer.model.dto.OrderDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

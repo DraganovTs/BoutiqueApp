@@ -1,9 +1,9 @@
 package com.homecode.auth.controller;
 
-import com.homecode.auth.model.UserCredential;
-import com.homecode.auth.model.model.UserCredentialDTO;
+import com.homecode.auth.exception.CustomIllegalStateException;
+import com.homecode.auth.model.entity.UserCredential;
+import com.homecode.auth.model.dto.UserCredentialDTO;
 import com.homecode.auth.service.AuthService;
-import com.homecode.commons.module.exception.CustomIllegalStateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.homecode.commons.module.utils.Web.API;
+import static com.homecode.auth.utils.Web.API;
 
 
 @RequiredArgsConstructor

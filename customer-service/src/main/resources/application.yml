@@ -1,5 +1,14 @@
 spring:
-  config:
-    import: optional:configserver:http://localhost:8888
   application:
     name: customer-service
+  profiles:
+    active: customer-service
+  config:
+    import: 'configserver:'
+  cloud:
+    config:
+      name: customer_service,config-client
+
+logging:
+  level:
+    root: info

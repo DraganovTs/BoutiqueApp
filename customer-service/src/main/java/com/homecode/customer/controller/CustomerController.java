@@ -1,13 +1,14 @@
 package com.homecode.customer.controller;
 
-import com.homecode.commons.module.dto.CustomerDTO;
+
+import com.homecode.customer.model.dto.CustomerDTO;
 import com.homecode.customer.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.homecode.commons.module.utils.Web.API;
+import static com.homecode.customer.utils.Web.API;
 
 
 @RequiredArgsConstructor

@@ -1,6 +1,14 @@
 spring:
-  config:
-    import: optional:configserver:http://localhost:8888
   application:
     name: mail-service
+  profiles:
+    active: mail-service
+  config:
+    import: 'configserver:'
+  cloud:
+    config:
+      name: mail_service,config-client
 
+logging:
+  level:
+    root: info

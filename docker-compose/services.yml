@@ -1,10 +1,19 @@
 version: '3.7'
 services:
+#  config-server:
+#    image: com.homecode/conf.server:0.0.1-SNAPSHOT
+#    ports:
+#      - "8888:8888"
+#    volumes:
+#      - "./docker-logs:/workspace/config-server/logs"
+#    networks:
+#      - ${GLOBAL_NETWORK:-services}
   product-service:
-    image: ${GROUP_ID}/product.service:${SERVICE_VERSION:-latest}
+    image: com.homecode/products.service:0.0.1-SNAPSHOT
     ports:
       - '8090:8090'
     environment:
-      - "jdbc:h2:tcp://my-h2/my-db-name"
+      - "SPRING_DATASOURCE_URL=jdbc:h2:tcp://my-h2/product-db"
+      - "SPRING_CLOUD_CONFIG_URI=http://localhost:8888"
     networks:
       - ${GLOBAL_NETWORK:-services}

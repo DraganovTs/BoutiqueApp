@@ -3,13 +3,14 @@ package com.homecode.order.service;
 
 
 
-import com.homecode.commons.module.dto.PaymentDTO;
-import com.homecode.commons.module.exception.CustomAlreadyExistException;
-import com.homecode.commons.module.exception.CustomDatabaseOperationException;
-import com.homecode.commons.module.exception.CustomNotFoundException;
-import com.homecode.commons.module.exception.CustomValidationException;
-import com.homecode.order.model.Order;
-import com.homecode.order.model.Payment;
+
+import com.homecode.order.exception.CustomAlreadyExistException;
+import com.homecode.order.exception.CustomDatabaseOperationException;
+import com.homecode.order.exception.CustomNotFoundException;
+import com.homecode.order.exception.CustomValidationException;
+import com.homecode.order.model.dto.PaymentDTO;
+import com.homecode.order.model.entity.Order;
+import com.homecode.order.model.entity.Payment;
 import com.homecode.order.model.enums.PaymentStatus;
 import com.homecode.order.repository.OrderRepository;
 import com.homecode.order.repository.PaymentRepository;

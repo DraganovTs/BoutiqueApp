@@ -1,6 +1,6 @@
 package com.homecode.auth.config;
 
-import com.homecode.auth.model.UserCredential;
+import com.homecode.auth.model.entity.UserCredential;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

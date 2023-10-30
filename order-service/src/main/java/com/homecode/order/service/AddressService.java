@@ -2,8 +2,9 @@ package com.homecode.order.service;
 
 
 
-import com.homecode.commons.module.dto.AddressDTO;
-import com.homecode.order.model.Address;
+
+import com.homecode.order.model.dto.AddressDTO;
+import com.homecode.order.model.entity.Address;
 
 public class AddressService {
     public static AddressDTO mapToDTO(Address shipmentAddress) {

@@ -3,13 +3,14 @@ package com.homecode.order.service;
 
 
 
-import com.homecode.commons.module.dto.CartDTO;
-import com.homecode.commons.module.dto.OrderDTO;
-import com.homecode.commons.module.exception.CustomDatabaseOperationException;
-import com.homecode.commons.module.exception.CustomNotFoundException;
-import com.homecode.commons.module.exception.CustomValidationException;
-import com.homecode.order.model.Address;
-import com.homecode.order.model.Order;
+
+import com.homecode.order.exception.CustomDatabaseOperationException;
+import com.homecode.order.exception.CustomNotFoundException;
+import com.homecode.order.exception.CustomValidationException;
+import com.homecode.order.model.dto.CartDTO;
+import com.homecode.order.model.dto.OrderDTO;
+import com.homecode.order.model.entity.Address;
+import com.homecode.order.model.entity.Order;
 import com.homecode.order.model.enums.OrderStatus;
 import com.homecode.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;

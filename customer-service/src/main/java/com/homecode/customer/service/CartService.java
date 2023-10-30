@@ -1,14 +1,15 @@
 package com.homecode.customer.service;
 
 
-import com.homecode.commons.module.dto.CartDTO;
-import com.homecode.commons.module.dto.OrderDTO;
-import com.homecode.commons.module.exception.CustomDatabaseOperationException;
-import com.homecode.commons.module.exception.CustomIllegalStateException;
-import com.homecode.commons.module.exception.CustomNotFoundException;
+
+import com.homecode.customer.exception.CustomDatabaseOperationException;
+import com.homecode.customer.exception.CustomIllegalStateException;
+import com.homecode.customer.exception.CustomNotFoundException;
 import com.homecode.customer.feign.OrderServiceInterface;
-import com.homecode.customer.model.Cart;
-import com.homecode.customer.model.Customer;
+import com.homecode.customer.model.dto.CartDTO;
+import com.homecode.customer.model.dto.OrderDTO;
+import com.homecode.customer.model.entity.Cart;
+import com.homecode.customer.model.entity.Customer;
 import com.homecode.customer.model.enums.CartStatus;
 import com.homecode.customer.repository.CartRepository;
 import com.homecode.customer.repository.CustomerRepository;

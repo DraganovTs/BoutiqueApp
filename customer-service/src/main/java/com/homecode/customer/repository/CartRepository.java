@@ -1,6 +1,6 @@
 package com.homecode.customer.repository;
 
-import com.homecode.customer.model.Cart;
+import com.homecode.customer.model.entity.Cart;
 import com.homecode.customer.model.enums.CartStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
