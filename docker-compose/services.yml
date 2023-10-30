@@ -1,19 +1,22 @@
 version: '3.7'
 services:
-#  config-server:
-#    image: com.homecode/conf.server:0.0.1-SNAPSHOT
-#    ports:
-#      - "8888:8888"
-#    volumes:
-#      - "./docker-logs:/workspace/config-server/logs"
-#    networks:
-#      - ${GLOBAL_NETWORK:-services}
+  config-server:
+    image: com.homecode/conf.server:0.0.1-SNAPSHOT
+    ports:
+      - "5006:5006"
+    volumes:
+      - "./docker-logs:/workspace/config-server/logs"
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5018 -Xms128m -Xmx256m"
+    networks:
+      - ${GLOBAL_NETWORK:-services}
   product-service:
     image: com.homecode/products.service:0.0.1-SNAPSHOT
+    command: ["/bin/sh", "/app/check-config-server-started.sh"]
     ports:
       - '8090:8090'
     environment:
       - "SPRING_DATASOURCE_URL=jdbc:h2:tcp://my-h2/product-db"
-      - "SPRING_CLOUD_CONFIG_URI=http://localhost:8888"
+      - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
     networks:
       - ${GLOBAL_NETWORK:-services}
